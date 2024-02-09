@@ -177,7 +177,7 @@ void ND280CubeScintConstructor::Init() {
   // SetFiberRadius(0.*CLHEP::mm);
   // SetHoleRadius(0.*CLHEP::mm);
   
-  SetCoatingThickness(0.*CLHEP::mm);
+  SetCoatingThickness(0.1*CLHEP::mm);
 
 
   //SetCoatingRadius(0.0*mm);
@@ -342,8 +342,10 @@ G4LogicalVolume* ND280CubeScintConstructor::GetPiece(void) {
 				    FindMaterial(GetScintillatorMaterial()),
 				    GetName()+"/Extrusion/Core");
     
-  // Define the volume of plastic scintillator as sensitive detector
+  // Define the volumes of plastic scintillator and reflector as sensitive detector
+  cubeVolume->SetSensitiveDetector( aTrackerSD ); 
   scintVolume->SetSensitiveDetector( aTrackerSD ); 
+  extrusionVolume->SetSensitiveDetector( aTrackerSD ); 
 
   
   // Place the scintillator inside the extrusion volume
@@ -485,6 +487,14 @@ G4LogicalVolume* ND280CubeScintConstructor::GetPiece(void) {
       fiberAlongYVolume->SetVisAttributes(visAtt_Fiber);
       fiberAlongZVolume->SetVisAttributes(visAtt_Fiber);
     }
+
+    // Set hole & fiber as sensitive detector 
+    holeAlongXVolume->SetSensitiveDetector( aTrackerSD );
+    holeAlongYVolume->SetSensitiveDetector( aTrackerSD );
+    holeAlongZVolume->SetSensitiveDetector( aTrackerSD );
+    fiberAlongXVolume->SetSensitiveDetector( aTrackerSD );
+    fiberAlongYVolume->SetSensitiveDetector( aTrackerSD );
+    fiberAlongZVolume->SetSensitiveDetector( aTrackerSD );
 
     
     // Place the holes inside the cube in order to be sure it's filled with "Air"
