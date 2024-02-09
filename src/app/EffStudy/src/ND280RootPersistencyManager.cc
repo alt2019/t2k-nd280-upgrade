@@ -1007,14 +1007,15 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
 	}
 
       }
-            
+
+  /// store all points 
       //Select points if first/last of the track or
       //if first/last in a SD
-      if( detname_curr != detname_prev ||
-      	  detname_curr != detname_aft  ||
-      	  itp == 0                     ||
-      	  itp == (NPoints-1)
-      	  ){
+//      if( detname_curr != detname_prev ||
+//      	  detname_curr != detname_aft  ||
+//      	  itp == 0                     ||
+//      	  itp == (NPoints-1)
+//      	  ){
       
 	//G4cout << "TrajTrkId = " << TrajTrkId << " : " 
 	//<< detname_prev << " " << detname_curr << " " << detname_aft << G4endl;
@@ -1052,7 +1053,10 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
 	
 	nd280TrackPoint->SetIsOnBoundary(ndPoint->IsOnBoundary());
 
-	
+  nd280TrackPoint->SetPreProcessName(ndPoint->GetPreProcessName());
+  nd280TrackPoint->SetPostProcessName(ndPoint->GetPostProcessName());
+  nd280TrackPoint->SetMaterialName(ndPoint->GetMaterialName());
+
 	//
 	// Store points if first/last point of the track
 	// or first/last of a SD
@@ -1078,7 +1082,7 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
 
 	//delete nd280TrackPoint; 
 	//nd280TrackPoint=NULL;
-      }
+//      } // lines 1013-1017
       
       detname_prev = detname_curr;
       
