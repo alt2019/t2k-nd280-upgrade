@@ -75,10 +75,16 @@ option( ${PROJECT_NAME}_ENABLE_TESTING "Turn on or off the building of test prog
 # this is particularly useful if a project is used multiple times and installed in a general location, where executables would overwrite each other.
 option( ${PROJECT_NAME}_ENABLE_EXECUTABLES "Turn on or off the building of executables (other than test programs)" ON )
 
-# flag for using C++11
+# flag for using C++11/14/17
 option( USE_CPP11 "Flag for building with C++11" ON )
 option( USE_CPP14 "Flag for building with C++14" OFF )
-if( USE_CPP14 )
+option( USE_CPP17 "Flag for building with C++17" OFF )
+if( USE_CPP17 )
+    add_definitions( -DUSE_CPP17 )
+    add_definitions( -DUSE_CPP14 )
+    add_definitions( -DUSE_CPP11 )
+    set( CMAKE_CXX_STANDARD 17 )
+elseif( USE_CPP14 )
     add_definitions( -DUSE_CPP14 )
     add_definitions( -DUSE_CPP11 )
     set( CMAKE_CXX_STANDARD 14 )
