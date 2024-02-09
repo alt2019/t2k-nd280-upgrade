@@ -55,6 +55,13 @@ public:
   // /// stopping point is on a geometric boundary, this is the volume that the
   // /// track is just exiting. 
   // int GetVolumeNode() const; // NOT IMPLEMENTED
+
+  /// Get process name at current step
+  G4String GetPreProcessName() const { return fPreProcessName; }
+  G4String GetPostProcessName() const { return fPostProcessName; }
+
+  /// get current material name of pointstep
+  G4String GetMaterialName() const { return fMaterialName; }
   
   // Get method for HEPRep style attributes
   
@@ -93,6 +100,10 @@ private:
   // MY MEMBERS
   G4ThreeVector fPostPosition;
   G4bool fSavePoint;
+
+  G4String fPreProcessName;
+  G4String fPostProcessName;
+  G4String fMaterialName; 
   
 };
 
