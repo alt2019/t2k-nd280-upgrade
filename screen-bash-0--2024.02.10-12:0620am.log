@@ -23354,3 +23354,489 @@ Trace: [2024-02-09T21:45:46.716Z] trace heartbeat
     at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
     at runMicrotasks (<anonymous>)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:46:46.717Z] debug 2 active connections
+Trace: [2024-02-09T21:46:46.717Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:47:46.719Z] debug 2 active connections
+Trace: [2024-02-09T21:47:46.719Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:48:46.720Z] debug 2 active connections
+Trace: [2024-02-09T21:48:46.720Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:49:46.722Z] debug 2 active connections
+Trace: [2024-02-09T21:49:46.722Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:50:46.723Z] debug 2 active connections
+Trace: [2024-02-09T21:50:46.723Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:51:46.724Z] debug 2 active connections
+Trace: [2024-02-09T21:51:46.724Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[00:52:10] ExtensionManagementService.refreshReportedCache
+[00:52:10] ExtensionManagementService.refreshControlCache { malicious: [], deprecated: {}, search: [] }
+[2024-02-09T21:52:46.725Z] debug 2 active connections
+Trace: [2024-02-09T21:52:46.725Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[00:53:10] Started scanning user extensions o {
+  scheme: 'file',
+  authority: '',
+  path: '/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/extensions/extensions.json',
+  query: '',
+  fragment: '',
+  _formatted: 'file:///t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/extensions/extensions.json',
+  _fsPath: '/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/extensions/extensions.json'
+}
+[00:53:10] Scanned user extensions: 2
+[2024-02-09T21:53:46.727Z] debug 2 active connections
+Trace: [2024-02-09T21:53:46.727Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:54:46.728Z] debug 2 active connections
+Trace: [2024-02-09T21:54:46.728Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:55:46.730Z] debug 2 active connections
+Trace: [2024-02-09T21:55:46.730Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:56:46.731Z] debug 2 active connections
+Trace: [2024-02-09T21:56:46.731Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:57:46.732Z] debug 2 active connections
+Trace: [2024-02-09T21:57:46.732Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:58:46.733Z] debug 2 active connections
+Trace: [2024-02-09T21:58:46.734Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T21:59:46.736Z] debug 2 active connections
+Trace: [2024-02-09T21:59:46.736Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[01:00:10] ExtensionManagementService.refreshReportedCache
+[01:00:10] ExtensionManagementService.refreshControlCache { malicious: [], deprecated: {}, search: [] }
+[2024-02-09T22:00:46.737Z] debug 2 active connections
+Trace: [2024-02-09T22:00:46.737Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[01:01:10] Started scanning user extensions o {
+  scheme: 'file',
+  authority: '',
+  path: '/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/extensions/extensions.json',
+  query: '',
+  fragment: '',
+  _formatted: 'file:///t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/extensions/extensions.json',
+  _fsPath: '/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/extensions/extensions.json'
+}
+[01:01:10] Scanned user extensions: 2
+[2024-02-09T22:01:46.740Z] debug 2 active connections
+Trace: [2024-02-09T22:01:46.740Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T22:02:46.743Z] debug 2 active connections
+Trace: [2024-02-09T22:02:46.743Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T22:03:46.745Z] debug 2 active connections
+Trace: [2024-02-09T22:03:46.745Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T22:04:46.746Z] debug 2 active connections
+Trace: [2024-02-09T22:04:46.746Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T22:05:46.748Z] debug 2 active connections
+Trace: [2024-02-09T22:05:46.748Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T22:06:46.748Z] debug 2 active connections
+Trace: [2024-02-09T22:06:46.749Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[01:07:10] ExtensionManagementService.refreshReportedCache
+[01:07:10] ExtensionManagementService.refreshControlCache { malicious: [], deprecated: {}, search: [] }
+[01:07:10] Started scanning user extensions o {
+  scheme: 'file',
+  authority: '',
+  path: '/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/extensions/extensions.json',
+  query: '',
+  fragment: '',
+  _formatted: 'file:///t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/extensions/extensions.json',
+  _fsPath: '/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/extensions/extensions.json'
+}
+[01:07:10] Scanned user extensions: 2
+[2024-02-09T22:07:46.750Z] debug 2 active connections
+Trace: [2024-02-09T22:07:46.750Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T22:08:46.751Z] debug 2 active connections
+Trace: [2024-02-09T22:08:46.751Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T22:09:46.753Z] debug 2 active connections
+Trace: [2024-02-09T22:09:46.753Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2024-02-09T22:10:46.754Z] debug 2 active connections
+Trace: [2024-02-09T22:10:46.754Z] trace heartbeat
+    at doLog (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:57:28)
+    at ServerFormatter.doWrite (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:200:20)
+    at ServerFormatter.write (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:119:14)
+    at Logger.handle (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:339:25)
+    at Logger.trace (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/node_modules/@coder/logger/out/logger.js:268:14)
+    at Heart.<anonymous> (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:41:29)
+    at Generator.next (<anonymous>)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:4:12)
+    at Heart.beat (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:37:16)
+    at /t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:76:17
+    at Generator.next (<anonymous>)
+    at fulfilled (/t2k/users/shvartsman/soft/pyenv-2.3.28-root/versions/mambaforge-22.9.0-3/envs/codeserver-00/share/code-server/out/node/heart.js:5:58)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)

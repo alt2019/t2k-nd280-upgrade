@@ -41,6 +41,9 @@ public:
     void SetPostPosition(double x, double y, double z) { fPostPosition.SetXYZ(x, y, z); };
     void SetIsOnBoundary(bool is) { fIsOnBoundary = is; };
     void SaveIt(bool save) { fSaveIt = save; };
+    void SetPreProcessName(std::string str) { fPreProcessName = str; };
+    void SetPostProcessName(std::string str) { fPostProcessName = str; };
+    void SetMaterialName(std::string str) { fMaterialName = str; };
 
     int GetPointID() { return fPointID; };
     double GetTime() { return fTime; };
@@ -55,6 +58,9 @@ public:
     TVector3 GetPostPosition() { return fPostPosition; };
     bool IsOnBoundary() { return fIsOnBoundary; };
     bool GetSaveIt() { return fSaveIt; };
+    std::string GetPreProcessName() { return fPreProcessName; };
+    std::string GetPostProcessName() { return fPostProcessName; };
+    std::string GetMaterialName() { return fMaterialName; };
 
     void PrintTrackPoint();
 
@@ -72,6 +78,9 @@ private:
     TVector3 fPostPosition;
     bool fIsOnBoundary;
     bool fSaveIt;
+    std::string fPreProcessName;
+    std::string fPostProcessName;
+    std::string fMaterialName;
 
     ClassDef(TND280UpTrackPoint, 3)
 };

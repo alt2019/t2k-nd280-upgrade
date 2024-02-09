@@ -36,6 +36,9 @@ TND280UpTrackPoint::TND280UpTrackPoint(){
 		       kUndefTrackPoint,
 		       kUndefTrackPoint);
   fSaveIt = true;
+  fPreProcessName = "test pre-process name";
+  fPostProcessName = "test post-process name";
+  fMaterialName = "test material name";
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......  
@@ -60,6 +63,9 @@ TND280UpTrackPoint::~TND280UpTrackPoint(){
                        kUndefTrackPoint,
                        kUndefTrackPoint);
   fSaveIt = true;
+  fPreProcessName = "";
+  fPostProcessName = "";
+  fMaterialName = "";
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......  
@@ -90,6 +96,9 @@ void TND280UpTrackPoint::PrintTrackPoint()
        << fPostPosition.Y() << ", "
        << fPostPosition.Z() << ") " 
        << endl;
+  cout << "preProcessName: " << fPreProcessName << endl;
+  cout << "postProcessName: " << fPostProcessName << endl;
+  cout << "materialName: " << fMaterialName << endl;
   cout << endl;
   cout << "oooooooooooooooooooooooooooooooo" << endl;
   cout << endl;
