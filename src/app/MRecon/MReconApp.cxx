@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#include <TString>
+#include <TString.h>
 
 #include "TND280UpEvent.hh"
 #include "TND280UpVertex.hh"
