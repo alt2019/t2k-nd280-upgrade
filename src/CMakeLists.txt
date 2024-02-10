@@ -83,6 +83,10 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/..//src/app/EffStudy/src/WAGASCI) ### 
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/..//src/app/Reconstruction/src/) ### include general classes
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/..//src/app/Reconstruction/src/ReadOutSim) ### include ReadOutSim class
 
+########### FOR MRECON ##########
+
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/..//src/app/MRecon/src/) ### include general classes
+
 #########################################
 
 # remove plenty of warnings from ROOT source code
@@ -98,3 +102,4 @@ message(STATUS "Linker flags : " ${CMAKE_EXE_LINKER_FLAGS})
 add_subdirectory(${CMAKE_SOURCE_DIR}/app/nd280UpEvent)
 add_subdirectory(${CMAKE_SOURCE_DIR}/app/EffStudy)
 add_subdirectory(${CMAKE_SOURCE_DIR}/app/Reconstruction)
+add_subdirectory(${CMAKE_SOURCE_DIR}/app/MRecon)
