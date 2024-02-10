@@ -21,6 +21,7 @@ pbuilder_install_headers (${MRECON_HEADERFILES})
 set (MRECONSPROG_DEP_LIBRARIES
     ND280Event
     EffStudy
+    Reconstruction
     MRecon
 )
 
