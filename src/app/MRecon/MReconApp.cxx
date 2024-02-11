@@ -6,6 +6,7 @@
 
 #include <TString.h>
 #include <TVector3.h>
+#include <TCanvas.h>
 
 #include <ND280UpApplyResponse.hh>
 
@@ -15,6 +16,15 @@
 #include "TND280UpRecoTrack.hh"
 #include "TND280UpHit.hh"
 
+
+void draw_MPPCProj2D(TH2F* histogram, std::string projection)
+{
+  std::string outFilename = "MPPCProj2D_" + projection + ".pdf";
+
+  TCanvas *canvas = new TCanvas("canvas", "Canvas", 800, 600);
+  histogram->Draw("colz");
+  canvas->SaveAs(outFilename.c_str());
+}
 
 
 int main(int argc, char **argv)
@@ -44,6 +54,10 @@ int main(int argc, char **argv)
     h2d_xy = (TH2F*)finput->Get("OutMPPCProj2D_XY");
     h2d_xz = (TH2F*)finput->Get("OutMPPCProj2D_XZ");
     h2d_yz = (TH2F*)finput->Get("OutMPPCProj2D_YZ");
+
+    // draw_MPPCProj2D(h2d_xy, "XY");
+    // draw_MPPCProj2D(h2d_xz, "XZ");
+    // draw_MPPCProj2D(h2d_yz, "YZ");
 
     Int_t binX = h2d_xy->GetXaxis()->GetNbins();
     Int_t binY = h2d_xy->GetYaxis()->GetNbins();
@@ -117,6 +131,7 @@ int main(int argc, char **argv)
             // if (ParentID != 0) continue;
             if (InitKinEnergy < 0.5 /* 500 KeV */) continue;
             if (ProcessName == "compt") continue;
+            if (PDG == 22) continue;
 
             std::cout << "Track " << TrackID
                       << ": Pid[" << ParentID << "] PDG[" << PDG << "] E0kin[" << InitKinEnergy << "] Proc[" << ProcessName << "] "
