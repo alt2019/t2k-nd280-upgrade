@@ -26,6 +26,8 @@ void draw_MPPCProj2D(TH2F* histogram, std::string projection)
   canvas->SaveAs(outFilename.c_str());
 }
 
+// void find_
+
 
 int main(int argc, char **argv)
 {
@@ -117,6 +119,35 @@ int main(int argc, char **argv)
         std::cout << "NHits " << NHits << std::endl;
         std::cout << "NTracks " << NTracks << std::endl;
 
+        /// find events with e- -> gamma -> e+/e- topology
+
+        std::vector<int> trkIDs;
+        std::vector<int> trkPIDs;
+        std::vector<int> trkPDGs;
+        std::vector<std::string> trkProcNames;
+        std::vector<double> trkE0ks;
+
+        std::map<int, int> tid_pid;
+        for (Int_t trjID = 0; trjID < nd280UpEvent->GetNTracks(); trjID++)
+        {
+            TND280UpTrack* track = nd280UpEvent->GetTrack(trjID);
+            int TrackID = track->GetTrackID();
+            int ParentID = track->GetParentID();
+            tid_pid.insert({TrackID, ParentID});
+        }
+
+        std::map<int, int> tid_gpid;
+        for (Int_t trjID = 0; trjID < nd280UpEvent->GetNTracks(); trjID++)
+        {
+            TND280UpTrack* track = nd280UpEvent->GetTrack(trjID);
+            int TrackID = track->GetTrackID();
+            int ParentID = track->GetParentID();
+            int GParentID = tid_pid[ParentID];
+            tid_gpid.insert({TrackID, GParentID});
+        }
+
+        // TND280UpTrack* maintrack;
+
         /// loop over true tracks
         for (Int_t trjID = 0; trjID < nd280UpEvent->GetNTracks(); trjID++)
         {
@@ -124,17 +155,49 @@ int main(int argc, char **argv)
 
             int TrackID = track->GetTrackID();
             int ParentID = track->GetParentID();
+            int GParentID = tid_gpid[TrackID];
             std::string ProcessName = track->GetProcessName();
             int PDG = track->GetPDG();
             double InitKinEnergy = track->GetInitKinEnergy();
 
+            trkIDs.push_back(TrackID);
+            trkPIDs.push_back(ParentID);
+            trkPDGs.push_back(PDG);
+            trkProcNames.push_back(ProcessName);
+            trkE0ks.push_back(InitKinEnergy);
+
+            // if (TrackID == 1) { maintrack = track; continue; }
+            // if (ParentID == 1)
+            // {
+
+            // }
+
             // if (ParentID != 0) continue;
-            if (InitKinEnergy < 0.5 /* 500 KeV */) continue;
-            if (ProcessName == "compt") continue;
-            if (PDG == 22) continue;
+            // if (InitKinEnergy < 0.5 /* 500 KeV */) continue;
+            // if (ProcessName == "compt") continue;
+            // if (PDG == 22) continue;
+            // if ((GParentID != 1) && (ParentID != 0)) continue;
+            
+            // if (GParentID != 1)
+            // {
+            //     if (ParentID != 1)
+            //     {
+            //         if (ParentID != 0) continue;
+            //     }
+            // }
+
+            // if (GParentID == 1)
+            // {
+            //     int parentPDG = nd280UpEvent->GetTrack(ParentID)->GetPDG();
+            //     if (parentPDG != 22) continue;
+            //     if (abs(PDG) != 11) continue;
+            // }
+
+            if (!((GParentID == 1) && (ProcessName == "conv"))) continue;
 
             std::cout << "Track " << TrackID
-                      << ": Pid[" << ParentID << "] PDG[" << PDG << "] E0kin[" << InitKinEnergy << "] Proc[" << ProcessName << "] "
+                      << ": Pid[" << ParentID << "] GPid[" << GParentID << "]"
+                      << " PDG[" << PDG << "] E0kin[" << InitKinEnergy << "] Proc[" << ProcessName << "] "
             << std::endl;
 
             // TVector3 GetInitMom() {return fInitMom;};
@@ -154,10 +217,17 @@ int main(int argc, char **argv)
             // if(track->GetPDG() == 13 && !track->GetParentID()) mu_found = true;
         }
 
+        
+
+
+
+
+
         double total_hits_edep = 0.0;
 
         /// loop over hits
-        for (int ihit = 0; ihit < NHits; ++ihit)
+        // for (int ihit = 0; ihit < NHits; ++ihit)
+        for (int ihit = 0; ihit < 0; ++ihit)
         {
             TND280UpHit *nd280UpHit = nd280UpEvent->GetHit(ihit);
 
