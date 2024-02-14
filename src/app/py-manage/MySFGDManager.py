@@ -119,11 +119,13 @@ class MySFGDManager:
         self.particles_list = particles_list
         print(particles_list)
         
-        kinetic_energy = PARTICLEGUN_CONFIG["kinetic_energy"]
-        if "," in kinetic_energy: kinetic_energy_list = kinetic_energy.split(",")
-        else: kinetic_energy_list = [kinetic_energy]
-        self.kinetic_energy_list = kinetic_energy_list
-        print(kinetic_energy_list)
+        # kinetic_energy_list = []
+        if "kinetic_energy" in PARTICLEGUN_CONFIG:
+          kinetic_energy = PARTICLEGUN_CONFIG["kinetic_energy"]
+          if "," in kinetic_energy: kinetic_energy_list = kinetic_energy.split(",")
+          else: kinetic_energy_list = [kinetic_energy]
+          self.kinetic_energy_list = kinetic_energy_list
+          print(kinetic_energy_list)
 
         momentum_list = []
         if "momentum" in PARTICLEGUN_CONFIG:
@@ -134,7 +136,7 @@ class MySFGDManager:
           print(momentum_list)
 
         magnetic_field = PARTICLEGUN_CONFIG["magnetic_field"]
-        if "," in kinetic_energy: magnetic_field_list = magnetic_field.split(",")
+        if "," in magnetic_field: magnetic_field_list = magnetic_field.split(",")
         else: magnetic_field_list = [magnetic_field]
         self.magnetic_field_list = magnetic_field_list
         print(magnetic_field_list)
