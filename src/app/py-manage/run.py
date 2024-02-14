@@ -23,3 +23,6 @@ if __name__ == '__main__':
   m = MySFGDManager(config=args.config)
   # m.prepare_simulation()
   m.run_simulation()
+
+  ## example:
+  # python3 run.py --config configs/e_mu_config.ini
