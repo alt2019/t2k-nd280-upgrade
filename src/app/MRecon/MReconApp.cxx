@@ -152,6 +152,7 @@ int main(int argc, char **argv)
   TString outfilename = "reco_output.root";
   std::string input_rootfilename = argv[1];
   std::string output_rootfilename = argv[2];
+  // int event_id_to_process = atoi(argv[3]);
 
   std::cout << "===============================================================" << std::endl;
   std::cout << "Received input ROOT file: " << input_rootfilename << std::endl;
