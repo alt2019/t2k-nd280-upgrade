@@ -251,7 +251,7 @@ class MySFGDManager:
 
 
   def create_geant4_vis_files(self, vis_path:Path):
-    print("!!!!")
+    # print("!!!!")
     if self.momentum_list:
       energy_measure_list = self.momentum_list
       energy_measure_type = "mom"
@@ -319,54 +319,29 @@ class MySFGDManager:
 
     njobs = 0
     data2write = []
-    # str2write = ""
-    # print(vis_files_lst)
     for vis_file in vis_files_lst:
         # print(filename)
         filename = vis_file.name
-        # tag = f"{filename[:-8]}_n{nexpts}"
-        # tag = f"{filename[:-8]}" ## w/o '-vis.mac' suffix
-        # _str2write = (
-        #   f"{self.t2knd280up_soft_build_path}/app/EffStudy/EffStudyApp "
-        #   f"{vis_file} {cfg_path} {sim_path}/{tag}-Exp0-Nexpt{nexpts} 0 {nexpts} "
-        #   # f"> {sim_path}/log-{tag}.log\n"
-        #   f"&>> {sim_path}/log-{tag}.log\n" ## redirect both stderr and stdout to log file
-        # )
 
         ### indicator for simulation process
         # /t2k2/users/shvartsman/PhD-work/SFGD/t2k_nd280_upgrade/simulate/test-12.02.2024-19.28.51/root-sim/ND280_mu-_P700uMeVc_GPx91.5y26.5z-92.0ucm_GDx0y0z1_Bx0.2y0z0utesla_n1000-Exp0-Nexpt1000
         out_fname_tag = f"{filename[:-8]}-Exp0-Nexpt{nexpts}" ## filename w/o '-vis.mac' suffix
         log_file_path = f"{sim_path}/log-{out_fname_tag}.log"
         command_itself = f"{self.t2knd280up_soft_build_path}/app/EffStudy/EffStudyApp {vis_file} {cfg_path} {sim_path}/p-{out_fname_tag} 0 {nexpts} &>> {log_file_path}"
-        
-        # cmd_rename_if_ok = f"mv {sim_path}/p-{out_fname_tag}.root {sim_path}/{out_fname_tag}.root"
-        # cmd_rename_if_err = f"mv {sim_path}/p-{out_fname_tag}.root {sim_path}/sv-{out_fname_tag}.root"
-        # post_action = f"if grep -q 'segmentation violation' '{log_file_path}'; then {cmd_rename_if_err} && echo '{out_fname_tag}' >> {sim_path}/err.txt; else {cmd_rename_if_ok}; fi "
-        # _str2write = (
-        #   f"{self.t2knd280up_soft_build_path}/app/EffStudy/EffStudyApp"
-        #   f" {vis_file} {cfg_path} {sim_path}/p-{out_fname_tag} 0 {nexpts}" ## 'p-' is indicator of process
-        #   f" &>> {log_file_path}" ## redirect both stderr and stdout to log file
-        #   # f" && mv {sim_path}/p-{out_fname_tag}.root {sim_path}/{out_fname_tag}.root" ## remove "p-" from filename -- indicator that process is finished
-        #   # f" && echo '{out_fname_tag} done' && sleep 5 && {post_action}"
-        #   f" ; echo '{out_fname_tag} done' && {post_action}"
-        # )
-        # # f"{command_itself}; echo '{out_fname_tag} done' && {post_action}"
 
         cmd_rename_root_if_ok = f"mv {sim_path}/p-{out_fname_tag}.root {sim_path}/{out_fname_tag}.root"
         cmd_rename_root_if_err = f"mv {sim_path}/p-{out_fname_tag}.root {sim_path}/sv$i-{out_fname_tag}.root"
         cmd_rename_log_if_err = f"mv {log_file_path} {sim_path}/sv$i-log-{out_fname_tag}.log"
 
-        post_action_condition = f"grep -q 'segmentation violation' '{log_file_path}'"
+        # post_action_condition = f"grep -q 'segmentation violation' '{log_file_path}'"
+        post_action_condition = f"tail -n 100 {log_file_path} | grep -q 'segmentation violation'" ## for large files just grep is very slow
         # post_action_on_err = f"{cmd_rename_root_if_err} && {cmd_rename_log_if_err} && echo '{out_fname_tag} $i' >> {sim_path}/err.txt"
         post_action_on_err = f"{cmd_rename_root_if_err} && {cmd_rename_log_if_err} && echo {out_fname_tag} $i >> {sim_path}/err.txt"
         post_action_on_ok = f"{cmd_rename_root_if_ok}; break"
         post_action = f"if {post_action_condition}; then {post_action_on_err}; else {post_action_on_ok}; fi"
         _str2write = f"for i in {{0..3}}; do {command_itself}; {post_action}; done"
 
-        # _str2write =  f"{command_itself}; {post_action}"
-
         data2write.append(_str2write)
-        # str2write += _str2write
         njobs += 1
 
     str2write = "\n".join(data2write)
