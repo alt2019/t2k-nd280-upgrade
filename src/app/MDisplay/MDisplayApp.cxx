@@ -18,8 +18,14 @@
 #include "TND280UpRecoTrack.hh"
 #include "TND280UpHit.hh"
 
+#include "src/SVG.hh"
+
 
 int main(int argc, char **argv)
 {
+  xmlns::XMLObject* xo = new xmlns::XMLObject("test", "new");
+  std::string xo_s = xo->render(2);
+  std::cout << xo_s << std::endl;
+
   return 0;
 }
