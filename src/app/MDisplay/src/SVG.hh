@@ -34,6 +34,7 @@ namespace xmlns
       XMLAttributes Attributes;
       std::vector<XMLObject*> ChildXMLObjects;
       int Level; // TODO: add update of Level for childs
+      bool _debug = false;
 
     public:     
       XMLObject(
@@ -88,7 +89,7 @@ namespace xmlns
         std::string Name;
         XMLAttributes attributes;
       };
-      XMLObject parse(std::string xml);
+      XMLObject* parse(std::string xml);
       tagParse _parse_tag_definition(std::string tag_definition);
 
       

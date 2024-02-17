@@ -125,18 +125,18 @@ xmlns::XMLObject::tagParse xmlns::XMLObject::_parse_tag_definition(std::string t
 
   if (tag_definition.find_first_of("\t\n ") == std::string::npos)
   {
-    std::cout << "--- Tag name: " << tag_definition << std::endl;
+    if (_debug) std::cout << "--- Tag name: " << tag_definition << std::endl;
     tp.Name = tag_definition;
     return tp;
   }
 
   int first_space_idx = tag_definition.find_first_of(' ');
   std::string tag_name = tag_definition.substr(0, first_space_idx);
-  std::cout << "--- Tag name: " << tag_name << std::endl;
+  if (_debug) std::cout << "--- Tag name: " << tag_name << std::endl;
   tp.Name = tag_name;
   
   std::string attributes_str = tag_definition.substr(first_space_idx+1, tag_definition.size());
-  std::cout << "--- Tag attributes: " << attributes_str << std::endl;
+  if (_debug) std::cout << "--- Tag attributes: " << attributes_str << std::endl;
 
   bool continue_precessing = true;
   std::string attributes_str_copy = attributes_str;
@@ -174,22 +174,26 @@ xmlns::XMLObject::tagParse xmlns::XMLObject::_parse_tag_definition(std::string t
         break;
       }
     }
-    // std::cout << "   ::last_quote_idx " << last_quote_idx << std::endl;
-    // std::cout << "   ::last_quote_idx " << remaining.substr(1, last_quote_idx-1) << std::endl;
-    // std::cout << "   ::last_quote_idx " << remaining.substr(last_quote_idx+1) << std::endl;
+    if (_debug)
+    {
+      std::cout << "   ::last_quote_idx " << last_quote_idx << std::endl;
+      std::cout << "   ::last_quote_idx " << remaining.substr(1, last_quote_idx-1) << std::endl;
+      std::cout << "   ::last_quote_idx " << remaining.substr(last_quote_idx+1) << std::endl;
+    }
+    
     /// get attribute definition
     std::string attr_def = remaining.substr(1, last_quote_idx-1);
     tp.attributes.insert({attr_name, attr_def});
-    // std::cout << "Attribute: " << attr_name << " -- " << attr_def << std::endl;
+    if (_debug) std::cout << "Attribute: " << attr_name << " -- " << attr_def << std::endl;
     attributes_str_copy = attributes_str_copy.substr(attr_idx+1+last_quote_idx+1);
-    // std::cout << "   ::attributes_str_copy " << attributes_str_copy << std::endl;
+    if (_debug) std::cout << "   ::attributes_str_copy " << attributes_str_copy << std::endl;
   }
 
   return tp;
 }
 
-xmlns::XMLObject xmlns::XMLObject::parse(std::string xml)
-{
+xmlns::XMLObject* xmlns::XMLObject::parse(std::string xml)
+{ // TODO: add error check
   std::cout << "\n" << xml << std::endl;
   std::string prev_char = "";
   bool is_tag_open = false;
@@ -250,7 +254,6 @@ xmlns::XMLObject xmlns::XMLObject::parse(std::string xml)
 
       tag_content = '<' + tag_content + '>';
       xmlContentSplitByTags.push_back({tag_content, tag_type});
-      // xmlContentSplitByTags.push_back(tag_content);
       tag_content = "";
       continue;
     }
@@ -263,32 +266,6 @@ xmlns::XMLObject xmlns::XMLObject::parse(std::string xml)
     {
       other_content += ch;
     }
-
-    // if (ch == "<" && !is_tag_content_open)
-    // {
-    //   is_tag_content_open = true;
-    // }
-    // else if (ch == "<" && is_tag_content_open) throw;
-
-    // if (ch == "<" && is_tag_open)
-    // {
-
-    // }
-
-
-
-    // if (prev_char == "<" && ch == "?")
-    // {
-    //   /* <? ... ?> */
-    //   is_tag_content_open = true;
-    // }
-    // else if (prev_char == "<" && ch == "!")
-    // {
-    //   /* <!DOCTYPE ... > */
-    //   is_tag_content_open = true;
-    // }
-
-
 
     prev_char = ch;
   }
@@ -303,26 +280,28 @@ xmlns::XMLObject xmlns::XMLObject::parse(std::string xml)
 
   for (auto& item: xmlContentSplitByTags)
   {
-    // std::cout << std::get<0>(item) << " " << std::get<1>(item) << std::endl;
+    if (_debug) std::cout << std::get<0>(item) << " " << std::get<1>(item) << std::endl;
 
     int item_type = std::get<1>(item);
 
     std::string contents = std::get<0>(item);
     std::string contents_wo_tag_symbols = "";
 
-    // std::cout << "  ::Stack:top: " << open_tags.top()->getName() << " :size: " << open_tags.size() << std::endl;
-    // std::cout << "  ::Stack:top: " << open_tags_vs.back()->getName() << " :size: " << open_tags_vs.size() << " == [";// << std::endl;
-    // std::cout << "=== ";
-    // for (auto it: open_tags_vs)
-    // {
-    //   std::cout << it->getName() << " ";
-    // }
-    // std::cout << "]" << std::endl;
+    if (_debug){
+      std::cout << "  ::Stack:top: " << open_tags.top()->getName() << " :size: " << open_tags.size() << std::endl;
+      std::cout << "  ::Stack:top: " << open_tags_vs.back()->getName() << " :size: " << open_tags_vs.size() << " == [";// << std::endl;
+      std::cout << "=== ";
+      for (auto it: open_tags_vs)
+      {
+        std::cout << it->getName() << " ";
+      }
+      std::cout << "]" << std::endl;
 
-    // std::cout << "///============================================" << std::endl;
-    // std::cout << main_xml->getChilds().size() << std::endl;
-    // std::cout << main_xml->render(2) << std::endl;
-    // std::cout << "///============================================" << std::endl;
+      std::cout << "///============================================" << std::endl;
+      std::cout << main_xml->getChilds().size() << std::endl;
+      std::cout << main_xml->render(2) << std::endl;
+      std::cout << "///============================================" << std::endl;
+    }
     
     switch(item_type)
     {
@@ -338,7 +317,7 @@ xmlns::XMLObject xmlns::XMLObject::parse(std::string xml)
         XMLObject* xml = new XMLObject(nullptr, XMLObjectType::Text, "", contents_wo_tag_symbols);
         XMLObject* last_open_xml = open_tags.top();
         // XMLObject* last_open_xml = open_tags_vs.back();
-        // std::cout << ">>> case 0: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
+         if (_debug) std::cout << ">>> case 0: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
         last_open_xml->addChild(xml);
         break;
       }
@@ -352,7 +331,7 @@ xmlns::XMLObject xmlns::XMLObject::parse(std::string xml)
           XMLObject* last_open_xml = open_tags.top();
           // XMLObject* last_open_xml = open_tags_vs.back();
           XMLObject* xml = new XMLObject(last_open_xml, XMLObjectType::Tag, tp.Name, "", tp.attributes);
-          std::cout << ">>> case 1: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
+           if (_debug) std::cout << ">>> case 1: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
           open_tags.push(xml);
           // open_tags_vs.push_back(xml);
         } else {
@@ -368,8 +347,8 @@ xmlns::XMLObject xmlns::XMLObject::parse(std::string xml)
         tagParse tp = _parse_tag_definition(contents_wo_tag_symbols);
         XMLObject* last_open_xml = open_tags.top();
         // XMLObject* last_open_xml = open_tags_vs.back();
-        // std::cout << ">>> case 2: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
-        // std::cout << "===::Stack:close: " << last_open_xml->getName() << " " << tp.Name << std::endl;
+         if (_debug) std::cout << ">>> case 2: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
+         if (_debug) std::cout << "===::Stack:close: " << last_open_xml->getName() << " " << tp.Name << std::endl;
         if (last_open_xml->getName() == tp.Name)
         {
           // open_tags_vs.pop_back();
@@ -384,7 +363,7 @@ xmlns::XMLObject xmlns::XMLObject::parse(std::string xml)
         XMLObject* xml = new XMLObject(XMLObjectType::Tag, tp.Name, "", tp.attributes);
         XMLObject* last_open_xml = open_tags.top();
         // XMLObject* last_open_xml = open_tags_vs.back();
-        // std::cout << ">>> case 3: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
+         if (_debug) std::cout << ">>> case 3: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
         last_open_xml->addChild(xml);
         break;
       }
@@ -395,7 +374,7 @@ xmlns::XMLObject xmlns::XMLObject::parse(std::string xml)
         XMLObject* xml = new XMLObject(XMLObjectType::Header, tp.Name, "", tp.attributes);
         XMLObject* last_open_xml = open_tags.top();
         // XMLObject* last_open_xml = open_tags_vs.back();
-        // std::cout << ">>> case 4: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
+         if (_debug) std::cout << ">>> case 4: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
         last_open_xml->addChild(xml);
         break;
       }
@@ -406,21 +385,22 @@ xmlns::XMLObject xmlns::XMLObject::parse(std::string xml)
         XMLObject* xml = new XMLObject(XMLObjectType::Doctype, tp.Name, "");
         XMLObject* last_open_xml = open_tags.top();
         // XMLObject* last_open_xml = open_tags_vs.back();
-        // std::cout << ">>> case 5: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
+         if (_debug) std::cout << ">>> case 5: last_open_xml: " << last_open_xml->getName() << " " << last_open_xml->getLevel() << std::endl;
         last_open_xml->addChild(xml);
         break;
       }
     }
 
-    std::cout << std::get<0>(item) << " " << std::get<1>(item) << " " << contents_wo_tag_symbols << std::endl;
+    if (_debug) std::cout << std::get<0>(item) << " " << std::get<1>(item) << " " << contents_wo_tag_symbols << std::endl;
   }
 
   open_tags.pop();
 
-  std::cout << "============================================" << std::endl;
-  std::cout << main_xml->render(2) << std::endl;
-  std::cout << "============================================" << std::endl;
+  if (_debug){
+    std::cout << "============================================" << std::endl;
+    std::cout << main_xml->render(2) << std::endl;
+    std::cout << "============================================" << std::endl;
+   }
 
-  XMLObject o("", "");
-  return o;
+  return main_xml;
 }
