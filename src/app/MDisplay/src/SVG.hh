@@ -1,4 +1,5 @@
 
+#include<iostream>
 #include<string>
 #include<vector>
 #include<map>
@@ -12,11 +13,13 @@ namespace xmlns
 
   enum XMLObjectType
   {
-    Header = 0,
+    File = 0, // top level xml object
+    Header,
     Doctype,
     Tag,
     Data,
     Comment,
+    Text, // text between tags. i.e. <path>suyfdu <bd>sdfbkj</bd> skdj</path>
     Css,
     Js
   };
@@ -30,40 +33,16 @@ namespace xmlns
       std::string Content;
       XMLAttributes Attributes;
       std::vector<XMLObject*> ChildXMLObjects;
-      int Level;
-      // std::string Indent;
+      int Level; // TODO: add update of Level for childs
 
-      // void _initialize();
-      // void _reset();
-      // void _setLevel() { if (ParentXMLObj) { Level = ParentXMLObj->getLevel() + 1; } };
-
-    public:
-      // XMLObject(std::string name, std::string contents);
-      // XMLObject(std::string name, std::string contents) :
-      //   ParentXMLObj(nullptr),
-      //   Type(XMLObjectType::Tag),
-      //   Name(name),
-      //   Content(contents),
-      //   Indent(" "),
-      //   Level(0)
-      //   {};
-      // XMLObject(std::string name, std::string contents, XMLAttributes& attributes);
-      // XMLObject(XMLObjectType type, std::string name, std::string contents, std::string indentation = " ");
-      // XMLObject(XMLObject* parent, std::string name, std::string contents, std::string indentation, XMLAttributes& attributes);
-      
-      // XMLObject(XMLObject* parent, XMLObjectType type, std::string name, std::string contents, std::string indentation, XMLAttributes& attributes);
-      // XMLObject(XMLObjectType type, std::string name, std::string contents, std::string indentation, XMLAttributes& attributes) : 
-      //   XMLObject(nullptr, type, name, contents, indentation, attributes){};
-      // XMLObject(std::string name, std::string contents, std::string indentation, XMLAttributes& attributes) : 
-      //   XMLObject(nullptr, XMLObjectType::Tag, name, contents, indentation, attributes){};
-      
+    public:     
       XMLObject(
         XMLObject* parent, XMLObjectType type,
         std::string name, std::string contents, const XMLAttributes& attributes = XMLAttributes()) : 
           ParentXMLObj(parent), Type(type),
           Name(name), Content(contents), Attributes(attributes),
           Level( (ParentXMLObj)? ParentXMLObj->getLevel() + 1: 0)
-          {};
+          { if (parent) parent->addChild(this); };
       XMLObject(
         XMLObjectType type,
         std::string name, std::string contents, const XMLAttributes& attributes = XMLAttributes()) : 
@@ -71,55 +50,50 @@ namespace xmlns
       XMLObject(
         std::string name, std::string contents, const XMLAttributes& attributes = XMLAttributes()) : 
           XMLObject(nullptr, XMLObjectType::Tag, name, contents, attributes){};
+      XMLObject(
+        XMLObject* parent,
+        std::string name, std::string contents, const XMLAttributes& attributes = XMLAttributes()) : 
+          XMLObject(parent, XMLObjectType::Tag, name, contents, attributes) {};
+      XMLObject() :
+          XMLObject(nullptr, XMLObjectType::File, "", "") {};
+      XMLObject(std::string xml);
 
-      ~XMLObject();
+      ~XMLObject() { ParentXMLObj = nullptr; ChildXMLObjects.clear(); Attributes.clear(); };
 
-      std::string             getName() { return Name; };
-      std::string             getContent() { return Content; }
+      std::string             getName      () { return Name; };
+      std::string             getContent   () { return Content; }
       XMLAttributes           getAttributes() { return Attributes; }
-      XMLObject*              getParent() { return ParentXMLObj; }
-      std::vector<XMLObject*> getChilds() { return ChildXMLObjects; }
-      int                     getLevel() { return Level; };
+      XMLObject*              getParent    () { return ParentXMLObj; }
+      std::vector<XMLObject*> getChilds    () { return ChildXMLObjects; }
+      int                     getLevel     () { return Level; };
+      XMLObjectType           getType      () { return Type; }
 
-      void setContent(std::string content) { Content = content; };
+      void setContent   (std::string content) { Content = content; };
       void setAttributes(XMLAttributes& attributes) { Attributes = attributes; };
-      // void setAttribute(std::tuple<std::string, std::string>& attribute) {  };
-      void setAttribute(std::string attribute, std::string value) { Attributes.insert_or_assign(attribute, value); };
-      void setParent(XMLObject& parent) { ParentXMLObj = &parent; };
-      void setParent(XMLObject* parent) { ParentXMLObj = parent; };
+      void setAttribute (std::string attribute, std::string value) { Attributes.insert_or_assign(attribute, value); };
+      void setParent    (XMLObject& parent) { ParentXMLObj = &parent; };
+      void setParent    (XMLObject* parent) { ParentXMLObj = parent; };
+      void setLevel     (int level) { Level = level; };
+      void setType      (XMLObjectType type) { Type = type; }
 
-      void addChild(XMLObject* child, XMLObject* before_child = nullptr, XMLObject* after_child = nullptr);
+      void addChild   (XMLObject* child, XMLObject* before_child = nullptr, XMLObject* after_child = nullptr);
+      // void addText(std::string text, XMLObject* before_child = nullptr, XMLObject* after_child = nullptr);
       void removeChild(XMLObject* child);
 
-      std::string render0(int tab_size);
-      std::string render(int tab_size);
-      // std::string render(int tab_size, std::string indentation);
+      // std::string render(int tab_size);
+      std::string render(int tab_size, std::string indentation = " ");
 
+      struct tagParse
+      {
+        std::string Name;
+        XMLAttributes attributes;
+      };
       XMLObject parse(std::string xml);
+      tagParse _parse_tag_definition(std::string tag_definition);
+
+      
   };
 
-  /*
-  class XMLComment : public XMLObject
-  {
-    XMLComment(XMLObject* parent, std::string contents);
-    ~XMLComment();
-    std::string render(int tab_size);
-  };
-
-  class XMLHeader : public XMLObject
-  {
-    XMLHeader(std::string contents, XMLAttributes& attributes);
-    ~XMLHeader();
-    std::string render(int tab_size);
-  };
-
-  class XMLTag : public XMLObject
-  {
-    XMLTag(XMLObject* parent, std::string name, std::string contents, std::string indentation, XMLAttributes& attributes);
-    ~XMLTag();
-    std::string render(int tab_size);
-  };
-  // */
 }
 
 namespace svgns
@@ -134,6 +108,9 @@ namespace svgns
       std::string render();
 
       SVGElement parse(std::string svg);
+
+      void addGroup();
+      void addPath();
       
   };
 }
