@@ -11,6 +11,7 @@
 #include <TVector3.h>
 #include <TCanvas.h>
 #include <TPaveText.h>
+#include <TString.h>
 
 #include "TND280UpEvent.hh"
 #include "TND280UpVertex.hh"
@@ -20,6 +21,41 @@
 
 #include "src/SVG.hh"
 
+#include "src/old/ExtractSimulationInformation.hh" // SimulationInformationFromFile, getEventsTreeFromRootFile
+#include "src/old/AnalizeEvents.hh"
+#include "src/old/SimulationAnalizer.hh"
+
+void DR1(TString prefix, TString filename) {
+	SimulationAnalizer SA{prefix, filename};
+
+	SA.createSVGfilesInEvents(0, 100);
+	// SA.printEvents(0, 10,
+	// 			   1 /* print vertices*/
+	// );
+	SA.computeEnergeticProperties(0, 1000);
+	// SA.computeAverageProperties(0, 1000);
+	// SA.getEnergiesOfPrimaryParticles(0, 1000);
+
+	std::cout << "!!! Output directory: " << SA.svgDirectoryRelativePath << std::endl;
+
+	SA.clear();
+}
+
+// void DR1(TString input_root_file) {
+// 	SimulationAnalizer SA{input_root_file};
+
+// 	SA.createSVGfilesInEvents(0, 100);
+// 	// SA.printEvents(0, 10,
+// 	// 			   1 /* print vertices*/
+// 	// );
+// 	SA.computeEnergeticProperties(0, 1000);
+// 	// SA.computeAverageProperties(0, 1000);
+// 	// SA.getEnergiesOfPrimaryParticles(0, 1000);
+
+// 	std::cout << "!!! Output directory: " << SA.svgDirectoryRelativePath << std::endl;
+
+// 	SA.clear();
+// }
 
 void createSVGforTrueTracks(TTree *tinput, TND280UpEvent *nd280UpEvent, int eventId)
 {
@@ -198,8 +234,8 @@ void test()
 
 int main(int argc, char **argv)
 {
-  test();
-  return 2;
+  // test();
+  // return 2;
 
   std::cout << "Usage:" << std::endl;
   std::cout << "  MDisplayApp <input ROOT file name (from GEANT4 simulation)> <output file path with tag> [<event number to process>]" << std::endl;
@@ -215,6 +251,15 @@ int main(int argc, char **argv)
 
   TFile *finput = new TFile(input_rootfilename.c_str(),"READ");
   std::cout << "Reading the input ROOT file: " << input_rootfilename << std::endl;
+
+  std::size_t found = input_rootfilename.find_last_of("/\\");
+  std::string path = input_rootfilename.substr(0,found+1);
+  std::string file = input_rootfilename.substr(found+1);
+  // std::cout << " path: " << str.substr(0,found) << '\n';
+  // std::cout << " file: " << str.substr(found+1) << '\n';
+
+  // DR1(path, file); // causes segfault
+  // return 2;
 
   TTree *tinput = (TTree*) finput->Get("ND280upEvents");
 
