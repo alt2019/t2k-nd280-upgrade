@@ -61,6 +61,8 @@ public:
   G4String GetPostProcessName() const { return fPostProcessName; }
 
   /// get current material name of pointstep
+  // G4String GetPreMaterialName() const { return fPreMaterialName; }
+  // G4String GetPostMaterialName() const { return fPostMaterialName; }
   G4String GetMaterialName() const { return fMaterialName; }
   
   // Get method for HEPRep style attributes
@@ -104,6 +106,8 @@ private:
   G4String fPreProcessName;
   G4String fPostProcessName;
   G4String fMaterialName; 
+  // G4String fPreMaterialName;
+  // G4String fPostMaterialName;
   
 };
 

@@ -228,7 +228,9 @@ class MySFGDManager:
           f'/field/setField {magnetic_field}\n'
           '/field/update\n'
           '/db/set/saveAllTraj 1\n'
-          '/db/set/saveAllHits 1\n')
+          '/db/set/saveAllHits 1\n'
+          # 'TCoating 0.2 mm\n'
+        )
       if generator_type == "Generator":
           str2write += '/generator/type Generator\n'
       else:
@@ -341,7 +343,7 @@ class MySFGDManager:
         post_action_on_err = f"{cmd_rename_root_if_err} && {cmd_rename_log_if_err} && echo {out_fname_tag} $i >> {sim_path}/err.txt"
         post_action_on_ok = f"{cmd_rename_root_if_ok}; break"
         post_action = f"if {post_action_condition}; then {post_action_on_err}; else {post_action_on_ok}; fi"
-        _str2write = f"for i in {{0..3}}; do {command_itself}; {post_action}; done"
+        _str2write = f"for i in {{0..5}}; do {command_itself}; {post_action}; done"
 
         data2write.append(_str2write)
         njobs += 1

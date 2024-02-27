@@ -1007,15 +1007,30 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
 	}
 
       }
-
-  /// store all points 
+            
       //Select points if first/last of the track or
       //if first/last in a SD
-//      if( detname_curr != detname_prev ||
-//      	  detname_curr != detname_aft  ||
-//      	  itp == 0                     ||
-//      	  itp == (NPoints-1)
-//      	  ){
+      // if( detname_curr != detname_prev ||
+      // 	  detname_curr != detname_aft  ||
+      // 	  itp == 0                     ||
+      // 	  itp == (NPoints-1)
+      // 	  ){
+
+      if  (
+        (detname_curr.contains("/t2k/OA/Magnet/Basket/target1/TargetUniform") ||
+         detname_curr.contains("/t2k/OA/Magnet/Basket/target1/SuperFGD1") || 
+         detname_curr.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/TargetUniform") ||
+         detname_curr.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/SuperFGD1") ||
+         detname_prev.contains("/t2k/OA/Magnet/Basket/target1/TargetUniform") ||
+         detname_prev.contains("/t2k/OA/Magnet/Basket/target1/SuperFGD1") || 
+         detname_prev.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/TargetUniform") ||
+         detname_prev.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/SuperFGD1") ||
+         detname_aft.contains("/t2k/OA/Magnet/Basket/target1/TargetUniform") ||
+         detname_aft.contains("/t2k/OA/Magnet/Basket/target1/SuperFGD1") || 
+         detname_aft.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/TargetUniform") ||
+         detname_aft.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/SuperFGD1")
+        ) || itp == 0 || itp == (NPoints-1))
+      {
       
 	//G4cout << "TrajTrkId = " << TrajTrkId << " : " 
 	//<< detname_prev << " " << detname_curr << " " << detname_aft << G4endl;
@@ -1053,10 +1068,7 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
 	
 	nd280TrackPoint->SetIsOnBoundary(ndPoint->IsOnBoundary());
 
-  nd280TrackPoint->SetPreProcessName(ndPoint->GetPreProcessName());
-  nd280TrackPoint->SetPostProcessName(ndPoint->GetPostProcessName());
-  nd280TrackPoint->SetMaterialName(ndPoint->GetMaterialName());
-
+	
 	//
 	// Store points if first/last point of the track
 	// or first/last of a SD
@@ -1067,22 +1079,24 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
 	//        << " --> TrkID = " << nd280Track->GetTrackID() 
 	//        << " --> ParID = " << nd280Track->GetParentID() 
 	//        << G4endl;
-	  
-	// Mark the points
-	MarkPoint(ndPoint); // Store if in a SD 
-	if(ndPoint->SavePoint()){    
-	//if(1){ // TEST PARTICLE GUN
-	  nd280Track->AddPoint(nd280TrackPoint);
-	}	
-	else if(itp == 0           || 
-		itp == (NPoints-1)
-		){
-	  nd280Track->AddPoint(nd280TrackPoint);
-	}
+	
+  MarkPoint(ndPoint);
+  nd280Track->AddPoint(nd280TrackPoint);
+	// // Mark the points
+	// MarkPoint(ndPoint); // Store if in a SD 
+	// if(ndPoint->SavePoint()){    
+	// //if(1){ // TEST PARTICLE GUN
+	//   nd280Track->AddPoint(nd280TrackPoint);
+	// }	
+	// else if(itp == 0           || 
+	// 	itp == (NPoints-1)
+	// 	){
+	//   nd280Track->AddPoint(nd280TrackPoint);
+	// }
 
 	//delete nd280TrackPoint; 
 	//nd280TrackPoint=NULL;
-//      } // lines 1013-1017
+      }
       
       detname_prev = detname_curr;
       

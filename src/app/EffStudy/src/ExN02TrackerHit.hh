@@ -248,7 +248,12 @@ inline void* ExN02TrackerHit::operator new(size_t)
 
 inline void ExN02TrackerHit::operator delete(void *aHit)
 {
+  // G4cout << " === ExN02TrackerHit::operator delete starts " << G4endl;
+  // G4cout << " === hit in " << ((ExN02TrackerHit*) aHit)->fDetID << G4endl;
+  // G4cout << " ===  " << (ExN02TrackerHit*) aHit << G4endl;
+  // ((ExN02TrackerHit*) aHit)->Print(); // segfault
   ExN02TrackerHitAllocator.FreeSingle((ExN02TrackerHit*) aHit);
+  // G4cout << " === ExN02TrackerHit::operator delete finishes " << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

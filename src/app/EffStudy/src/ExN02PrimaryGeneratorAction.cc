@@ -102,6 +102,13 @@ void ExN02PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   // This function is called at the begining of event
 
+  G4cout << "\n\n"
+         << "//////////////////////////////////////////////////////////////////////////\n"
+         << "//  started ExN02PrimaryGeneratorAction::GeneratePrimaries for event " << anEvent->GetEventID() << "\n"
+         << "//////////////////////////////////////////////////////////////////////////\n"
+         << "//  seed: " << CLHEP::HepRandom::getTheSeed() << "\n"
+  << G4endl;
+
   bool doGun = false;
   if(fGeneratorType=="ParticleGun") doGun = true;
 
@@ -390,6 +397,12 @@ void ExN02PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     G4Exception("ExN02PrimaryGeneratorAction::GeneratePrimaries()",
     "MyCode0002",FatalException, msg);        
   }
+
+  G4cout << "\n\n"
+         << "//////////////////////////////////////////////////////////////////////////\n"
+         << "//  finished ExN02PrimaryGeneratorAction::GeneratePrimaries for event " << anEvent->GetEventID() << "\n"
+         << "//////////////////////////////////////////////////////////////////////////\n"
+  << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -110,6 +110,12 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
   // Accumulate statistics
   //  
 
+  G4cout << "\n\n"
+         << "//////////////////////////////////////////////////////////////\n"
+         << "//  started ExN02EventAction::EndOfEventAction for event " << event->GetEventID() << "\n"
+         << "//////////////////////////////////////////////////////////////\n"
+  << G4endl;
+
   ///////////////////////////////////////////////////////
   //                                                   //
   //   Access the primary and informational vertices   //
@@ -443,6 +449,12 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
 
 
   G4cout << "End of EndOfEvent" << G4endl;
+
+  G4cout << "\n\n"
+         << "//////////////////////////////////////////////////////////////\n"
+         << "//  finished ExN02EventAction::EndOfEventAction for event " << event->GetEventID() << "\n"
+         << "//////////////////////////////////////////////////////////////\n"
+  << G4endl;
 
 }
 
