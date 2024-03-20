@@ -160,7 +160,37 @@ class MySFGDManager:
         print(self.N_events_to_simulate)
         
       elif (self.sim_generator_type == "Genie"):
-        pass
+        GENIE_CONFIG = config_parser["GENIE_CONFIG"]
+        particles = GENIE_CONFIG["particles"]
+        if " " in particles: particles_list = particles.split(" ")
+        elif "," in particles: particles_list = particles.split(",")
+        else: particles_list = [particles]
+        self.particles_list = particles_list
+        print(particles_list)
+
+        magnetic_field = GENIE_CONFIG["magnetic_field"]
+        if "," in magnetic_field: magnetic_field_list = magnetic_field.split(",")
+        else: magnetic_field_list = [magnetic_field]
+        self.magnetic_field_list = magnetic_field_list
+        print(magnetic_field_list)
+
+        if "kinetic_energy" in GENIE_CONFIG:
+          kinetic_energy = GENIE_CONFIG["kinetic_energy"]
+          if "," in kinetic_energy: kinetic_energy_list = kinetic_energy.split(",")
+          else: kinetic_energy_list = [kinetic_energy]
+          self.kinetic_energy_list = kinetic_energy_list
+          print(kinetic_energy_list)
+
+        momentum_list = []
+        if "momentum" in GENIE_CONFIG:
+          momentum = GENIE_CONFIG["momentum"]
+          if "," in momentum: momentum_list = momentum.split(",")
+          else: momentum_list = [momentum]
+          self.momentum_list = momentum_list
+          print(momentum_list)
+
+        self.N_events_to_simulate = int(GENIE_CONFIG["N_events_to_simulate"])
+        print(self.N_events_to_simulate)
     elif (self.action == "reconstruct"):
       pass
     elif (self.action == "visualize"):
@@ -233,6 +263,14 @@ class MySFGDManager:
         )
       if generator_type == "Generator":
           str2write += '/generator/type Generator\n'
+
+          # if (energy_measure_type == "mom"):
+          #   # str2write += f'/gun/momentum {mv[0]} {mv[1]} {mv[2]} {mv[3][:-2]}\n'
+          #   str2write += f"/gun/momentumAmp {energy_measure_item.replace('/c', '')}\n"
+          # elif (energy_measure_type == "ene"):
+          #   str2write += f'/gun/energy {energy_measure_item}\n'
+          # else:
+          #   pass
       else:
           str2write += (
               '/generator/type ParticleGun\n'
@@ -263,7 +301,23 @@ class MySFGDManager:
       energy_measure_list = self.kinetic_energy_list
       energy_measure_type = "ene"
     else:
-      raise Exception("Momentum or kinetic energy are not set!")
+      # raise Exception("Momentum or kinetic energy are not set!")
+      iterator = product(
+        self.particles_list,
+        self.magnetic_field_list,
+      )
+      for it in iterator:
+        print(it)
+        self._create_geant4_vis_file(
+          vis_path = vis_path,
+          particle = it[0],
+          energy_measure_item = None,
+          energy_measure_type = None,
+          gun_position = None,
+          gun_direction = None,
+          magnetic_field = it[1],
+        )
+      return
 
     print(energy_measure_list)
     print(self.particles_list)
