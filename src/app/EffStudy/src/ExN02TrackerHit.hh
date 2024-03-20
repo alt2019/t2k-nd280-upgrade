@@ -233,7 +233,13 @@ private:
 
 typedef G4THitsCollection<ExN02TrackerHit> ExN02TrackerHitsCollection;
 
-extern G4Allocator<ExN02TrackerHit> ExN02TrackerHitAllocator;
+// extern G4Allocator<ExN02TrackerHit> ExN02TrackerHitAllocator;
+
+#if defined G4TRACKING_ALLOC_EXPORT
+extern G4DLLEXPORT G4Allocator<ExN02TrackerHit> ExN02TrackerHitAllocator;
+#else
+extern G4DLLIMPORT G4Allocator<ExN02TrackerHit> ExN02TrackerHitAllocator;
+#endif
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -248,12 +254,19 @@ inline void* ExN02TrackerHit::operator new(size_t)
 
 inline void ExN02TrackerHit::operator delete(void *aHit)
 {
+  // G4cout << " H[" << aHit << "] ";
+  // G4cout << " H[" << aHit << ";ID:" << ((ExN02TrackerHit*)aHit)->GetHitID() << "] ";
   // G4cout << " === ExN02TrackerHit::operator delete starts " << G4endl;
   // G4cout << " === hit in " << ((ExN02TrackerHit*) aHit)->fDetID << G4endl;
   // G4cout << " ===  " << (ExN02TrackerHit*) aHit << G4endl;
   // ((ExN02TrackerHit*) aHit)->Print(); // segfault
-  ExN02TrackerHitAllocator.FreeSingle((ExN02TrackerHit*) aHit);
+  ExN02TrackerHitAllocator.FreeSingle((ExN02TrackerHit*) aHit); /// default
   // G4cout << " === ExN02TrackerHit::operator delete finishes " << G4endl;
+
+  // ExN02TrackerHit* th = static_cast<ExN02TrackerHit*>(aHit);
+  // if (!th) return;
+  // G4cout << " H[" << aHit << ";ID:" << th->GetEdep() << "] ";
+  // ExN02TrackerHitAllocator.FreeSingle(th);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
