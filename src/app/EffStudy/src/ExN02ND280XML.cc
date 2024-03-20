@@ -87,6 +87,7 @@ ExN02ND280XML::~ExN02ND280XML(){
  fSuperFGDPos1_X = 0.;
  fSuperFGDPos1_Y = 0.;
  fSuperFGDPos1_Z = 0.;
+ fSuperFGDNuVertexPosition1 = "";
 
  fSuperFGDCubeEdge2 = 0.;
  fSuperFGDCubeNum2_X = 0;
@@ -635,6 +636,7 @@ void ExN02ND280XML::SetInputs(){
     XML2Double("SuperFGDPos1_X"    ,fSuperFGDPos1_X);
     XML2Double("SuperFGDPos1_Y"    ,fSuperFGDPos1_Y);
     XML2Double("SuperFGDPos1_Z"    ,fSuperFGDPos1_Z);
+    XML2String("SuperFGDNuVertexPosition1", fSuperFGDNuVertexPosition1);
     // SuperFGD 2
     XML2Double("SuperFGDCubeEdge2" ,fSuperFGDCubeEdge2);
     XML2Int("SuperFGDCubeNum2_X",fSuperFGDCubeNum2_X);

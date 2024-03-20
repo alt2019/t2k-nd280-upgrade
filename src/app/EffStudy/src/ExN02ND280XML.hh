@@ -102,6 +102,7 @@ public :
   G4double GetXMLSuperFGDPos1_X()    {return fSuperFGDPos1_X;};
   G4double GetXMLSuperFGDPos1_Y()    {return fSuperFGDPos1_Y;};
   G4double GetXMLSuperFGDPos1_Z()    {return fSuperFGDPos1_Z;};
+  G4String GetXMLSuperFGDNuVertexPosition(){return fSuperFGDNuVertexPosition1;};
 
   //CF Box
   G4double GetXMLCFBoxCFRPThickness()   {return fCFBoxCFRPThickness;};
@@ -401,6 +402,7 @@ private :
   G4double fSuperFGDPos1_X;
   G4double fSuperFGDPos1_Y;
   G4double fSuperFGDPos1_Z;
+  G4String fSuperFGDNuVertexPosition1;
   
   //CF Box Thickness
   G4double fCFBoxCFRPThickness;
