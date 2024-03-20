@@ -309,7 +309,8 @@ void ExN02RooTrackerKinematicsGenerator::GeneratePrimaryVertex(G4Event* anEvent)
   G4PrimaryVertex* theVertex;
   // WARNING hardcoded to the upstream uniform target
   float x, y, z;
-  if (inxml->GetXMLGenerTypeName()=="NEUT"){
+  if (inxml->GetXMLGenerTypeName()=="NEUT")
+  {
     float targetWidth   = inxml->GetXMLTargetwidth1(); // width along X
     float targetLength  = inxml->GetXMLTargetlength1(); // length along Z
     float targetHeight  = inxml->GetXMLTargetheight1(); // height along Y
@@ -327,7 +328,94 @@ void ExN02RooTrackerKinematicsGenerator::GeneratePrimaryVertex(G4Event* anEvent)
                                                   y*CLHEP::m,
                                                   z*CLHEP::m),
                                                   fEvtVtx[3]*CLHEP::second);
-  } else {
+  }
+  // /*
+  else if (inxml->GetXMLGenerTypeName()=="GENIE") // now the same as for NEUT
+  {
+    // float new_x, new_y, new_z;
+
+    // float sfgdPosX = inxml->GetXMLSuperFGDPos1_X();
+    // float sfgdPosY = inxml->GetXMLSuperFGDPos1_Y();
+    // float sfgdPosZ = inxml->GetXMLSuperFGDPos1_Z();
+
+    // int sfgdCubeNumX = inxml->GetXMLSuperFGDCubeNum1_X();
+    // int sfgdCubeNumY = inxml->GetXMLSuperFGDCubeNum1_Y();
+    // int sfgdCubeNumZ = inxml->GetXMLSuperFGDCubeNum1_Z();
+    // float sfgdCubeEdge = inxml->GetXMLSuperFGDCubeEdge1();
+
+    // float sfgdWidth  = sfgdCubeEdge * sfgdCubeNumX;
+    // float sfgdLength = sfgdCubeEdge * sfgdCubeNumZ;
+    // float sfgdHeight = sfgdCubeEdge * sfgdCubeNumY;
+
+    // new_x = G4UniformRand() * sfgdWidth  - sfgdWidth*0.5  + sfgdPosX; // mm
+    // new_y = G4UniformRand() * sfgdLength - sfgdLength*0.5 + sfgdPosZ;
+    // new_z = G4UniformRand() * sfgdHeight - sfgdHeight*0.5 + sfgdPosY;
+
+    // // new_x *= 0.001;
+    // // new_y *= 0.001;
+    // // new_z *= 0.001;
+
+    // // WARNING millimiters here instead of
+    // theVertex = new G4PrimaryVertex(G4ThreeVector(new_x*CLHEP::mm,
+    //                                               new_y*CLHEP::mm,
+    //                                               new_z*CLHEP::mm),
+    //                                               fEvtVtx[3]*CLHEP::second);
+
+    // theVertex = new G4PrimaryVertex(G4ThreeVector(fEvtVtx[0]*CLHEP::m,
+    //                                               fEvtVtx[1]*CLHEP::m,
+    //                                               fEvtVtx[2]*CLHEP::m),
+    //                                               fEvtVtx[3]*CLHEP::second);
+
+    // theVertex = new G4PrimaryVertex(G4ThreeVector(0.0*CLHEP::mm,
+    //                                               0.0*CLHEP::mm,
+    //                                               0.0*CLHEP::mm),
+    //                                               fEvtVtx[3]*CLHEP::second);
+
+
+
+    if (inxml->GetXMLSuperFGDNuVertexPosition() == "random")
+    {
+      float new_x, new_y, new_z;
+
+      float sfgdPosX = inxml->GetXMLSuperFGDPos1_X();
+      float sfgdPosY = inxml->GetXMLSuperFGDPos1_Y();
+      float sfgdPosZ = inxml->GetXMLSuperFGDPos1_Z();
+
+      int sfgdCubeNumX = inxml->GetXMLSuperFGDCubeNum1_X();
+      int sfgdCubeNumY = inxml->GetXMLSuperFGDCubeNum1_Y();
+      int sfgdCubeNumZ = inxml->GetXMLSuperFGDCubeNum1_Z();
+      float sfgdCubeEdge = inxml->GetXMLSuperFGDCubeEdge1();
+
+      float sfgdWidth  = sfgdCubeEdge * (sfgdCubeNumX - 2); // less by 2 layers in each direction
+      float sfgdLength = sfgdCubeEdge * (sfgdCubeNumZ - 2); // less by 2 layers in each direction
+      float sfgdHeight = sfgdCubeEdge * (sfgdCubeNumY - 2); // less by 2 layers in each direction
+
+      new_x = G4UniformRand() * sfgdWidth  - sfgdWidth*0.5  + sfgdPosX; // mm
+      new_y = G4UniformRand() * sfgdHeight - sfgdHeight*0.5 + sfgdPosY;
+      new_z = G4UniformRand() * sfgdLength - sfgdLength*0.5 + sfgdPosZ;
+
+      // WARNING millimiters here instead of
+      theVertex = new G4PrimaryVertex(G4ThreeVector(new_x*CLHEP::mm,
+                                                    new_y*CLHEP::mm,
+                                                    new_z*CLHEP::mm),
+                                                    fEvtVtx[3]*CLHEP::second);
+
+      x = new_x;
+      y = new_y;
+      z = new_z;
+    } else {
+      theVertex = new G4PrimaryVertex(G4ThreeVector(0.0*CLHEP::m,
+                                                    0.0*CLHEP::m,
+                                                    0.0*CLHEP::m),
+                                                    fEvtVtx[3]*CLHEP::second);
+
+      x = 0.0;
+      y = 0.0;
+      z = 0.0;
+    }
+  } // */
+  else
+  {
     theVertex = new G4PrimaryVertex(G4ThreeVector(fEvtVtx[0]*CLHEP::m,
    					                                      fEvtVtx[1]*CLHEP::m,
    					                                      fEvtVtx[2]*CLHEP::m),
@@ -369,10 +457,18 @@ void ExN02RooTrackerKinematicsGenerator::GeneratePrimaryVertex(G4Event* anEvent)
   // Add an informational vertex for storing the incoming 
   // neutrino particle and target nucleus.
   G4PrimaryVertex* theIncomingVertex;
-  if (inxml->GetXMLGenerTypeName()=="NEUT"){
+  if (inxml->GetXMLGenerTypeName()=="NEUT")
+  {
     theIncomingVertex = new G4PrimaryVertex(G4ThreeVector( x*CLHEP::m,
                                                            y*CLHEP::m,
                                                            z*CLHEP::m),
+                                                           fEvtVtx[3]*CLHEP::second);
+  }
+  else if (inxml->GetXMLGenerTypeName()=="GENIE")
+  {
+    theIncomingVertex = new G4PrimaryVertex(G4ThreeVector( x*CLHEP::mm,
+                                                           y*CLHEP::mm,
+                                                           z*CLHEP::mm),
                                                            fEvtVtx[3]*CLHEP::second);
   } else {
     theIncomingVertex = new G4PrimaryVertex(G4ThreeVector(fEvtVtx[0]*CLHEP::m,
@@ -390,6 +486,13 @@ void ExN02RooTrackerKinematicsGenerator::GeneratePrimaryVertex(G4Event* anEvent)
   incomingVertexInfo->SetReactionNum(fEvtCodeNum);
  
   theIncomingVertex->SetUserInformation(incomingVertexInfo);
+
+  /// debug
+  std::cout << "Vertex Position: "
+            << " X, mm: " << (theIncomingVertex->GetPosition()).getX()
+            << " Y, mm: " << (theIncomingVertex->GetPosition()).getY()
+            << " Z, mm: " << (theIncomingVertex->GetPosition()).getZ()
+  << std::endl;
   
   // Fill the particles to be tracked (status ==1).  These particles are
   // attached to the primary vertex.  Also save the incident neutrino
@@ -399,13 +502,13 @@ void ExN02RooTrackerKinematicsGenerator::GeneratePrimaryVertex(G4Event* anEvent)
   G4IonTable     * ionTable      = G4IonTable::GetIonTable();
   for (G4int cnt = 0; cnt < fStdHepN; ++cnt) {
 
-    // cout << endl;
-    // cout << "fStdHepP4 = " 
-    // 	 << fStdHepP4[cnt][0]*CLHEP::GeV << ", "
-    // 	 << fStdHepP4[cnt][1]*CLHEP::GeV << ", "
-    // 	 << fStdHepP4[cnt][2]*CLHEP::GeV << ", "
-    // 	 << fStdHepP4[cnt][3]*CLHEP::GeV << ", "
-    // 	 << endl;
+    cout << endl;
+    cout << cnt << " fStdHepP4 = " 
+    	 << fStdHepP4[cnt][0]*CLHEP::GeV << ", "
+    	 << fStdHepP4[cnt][1]*CLHEP::GeV << ", "
+    	 << fStdHepP4[cnt][2]*CLHEP::GeV << ", "
+    	 << fStdHepP4[cnt][3]*CLHEP::GeV << ", "
+    	 << endl;
 
     G4ParticleDefinition* particleDef
       = particleTable->FindParticle(fStdHepPdg[cnt]);
