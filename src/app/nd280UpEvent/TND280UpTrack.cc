@@ -82,6 +82,14 @@ TND280UpTrack::TND280UpTrack()
 
   fNPoints = 0;
   fListOfPoints = new TList;
+
+  fLengthInSFGD = kUndefTrack;
+  fEdepInSFGD = kUndefTrack;
+  fLeftSFGDwithMometum.SetXYZ(kUndefTrack,
+		  kUndefTrack,
+		  kUndefTrack);
+  fIsStartedInSFGD = false;
+  fIsStoppedInSFGD = false;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -145,6 +153,14 @@ TND280UpTrack::~TND280UpTrack()
   fEdepBrlECal    = kUndefTrack;
   fEdepP0DECal    = kUndefTrack;
   fEdepUSECalP0D  = kUndefTrack;
+
+  fLengthInSFGD = kUndefTrack;
+  fEdepInSFGD = kUndefTrack;
+  fLeftSFGDwithMometum.SetXYZ(kUndefTrack,
+		  kUndefTrack,
+		  kUndefTrack);
+  fIsStartedInSFGD = false;
+  fIsStoppedInSFGD = false;
 
   fNPoints = 0;
 
@@ -251,6 +267,12 @@ void TND280UpTrack::PrintTrack()
   if(fEdepBrlECal>0.){cout << "Edep in BrlECal: "   << fEdepBrlECal   << endl;}
   if(fEdepP0DECal>0.){cout << "Edep in P0DECal: "   << fEdepP0DECal   << endl;}
   if(fEdepUSECalP0D>0.){cout << "Edep in USECalP0D: "   << fEdepUSECalP0D   << endl;}
+
+  cout << "Left SFGD with Momentum: " << fLeftSFGDwithMometum.Mag() << endl;
+  cout << "Is started in SFGD: " << fIsStartedInSFGD << endl;
+  cout << "Is stopped in SFGD: " << fIsStoppedInSFGD << endl;
+  if(fEdepInSFGD>0.){cout << "Edep in SFGD: "   << fEdepInSFGD   << endl;}
+  if(fLengthInSFGD>0.){cout << "Length in SFGD: "   << fLengthInSFGD   << endl;}
 
   cout << "Save track: " << ((fSaveIt) ? "YES " : "NO") << endl;
   cout << endl;

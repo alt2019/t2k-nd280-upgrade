@@ -118,7 +118,7 @@ public:
     fSaveAllTraj = val;
   }
 
-  virtual bool SetSaveRecon(bool val) {
+  virtual bool SetSaveRecon(bool val) { /// TODO: convert to void
     fSaveRecon = val;
   }
 

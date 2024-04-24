@@ -55,6 +55,7 @@ Particle nu_mu       = Particle("nu_mu"      , "MeV", 0.0    , 14  );
 Particle anti_nu_mu  = Particle("anti_nu_mu" , "MeV", 0.0   , -14  );
 Particle nu_tau      = Particle("nu_tau"     , "MeV", 0.0    , 16  );
 Particle anti_nu_tau = Particle("anti_nu_tau", "MeV", 0.0   , -16  );
+Particle photon      = Particle("photon"     , "MeV", 0.0   , 22   );
 
 
 std::unordered_map<int, Particle> PARTICLE_MASS = {
@@ -72,6 +73,7 @@ std::unordered_map<int, Particle> PARTICLE_MASS = {
 	{-14 , anti_nu_mu },
 	{16  , nu_tau     },
 	{-16 , anti_nu_tau},
+	{22  , photon     },
 };
 
 
@@ -90,6 +92,7 @@ std::unordered_map<int, double> TABLE_PARTICLE_PDG_MASS = {
 	{-14 , 0.0    }, // anti_nu_mu
 	{16  , 0.0    }, // nu_tau
 	{-16 , 0.0    }, // anti_nu_tau
+	{22  , 0.0    }, // photon
 };
 
 std::unordered_map<std::string, double> TABLE_PARTICLE_NAME_MASS = {
@@ -107,6 +110,7 @@ std::unordered_map<std::string, double> TABLE_PARTICLE_NAME_MASS = {
 	{"anti_nu_mu" , 0.0    }, // anti_nu_mu
 	{"nu_tau"     , 0.0    }, // nu_tau
 	{"anti_nu_tau", 0.0    }, // anti_nu_tau
+	{"photon"     , 0.0    }, // photon
 };
 
 std::unordered_map<std::string, int> TABLE_PARTICLE_NAME_PDG = {
@@ -124,6 +128,7 @@ std::unordered_map<std::string, int> TABLE_PARTICLE_NAME_PDG = {
 	{"anti_nu_mu" , -14 }, // anti_nu_mu
 	{"nu_tau"     , 16  }, // nu_tau
 	{"anti_nu_tau", -16 }, // anti_nu_tau
+	{"photon"     , 22  }, // photon
 };
 
 
@@ -142,6 +147,7 @@ std::unordered_map<int, std::string> TABLE_PARTICLE_PDG_NAME = {
 	{-14 , "anti_nu_mu" }, // anti_nu_mu
 	{16  , "nu_tau"     }, // nu_tau
 	{-16 , "anti_nu_tau"}, // anti_nu_tau
+	{22  , "photon"     }, // photon
 };
 
 
@@ -162,6 +168,8 @@ std::unordered_map<int, std::string> TABLE_PARTICLE_PDG_DEFAULT_COLOR = {
 	{2112, "#22FF00"}, // neutron
 	{-211, "#22FF00"}, // pi-
 	{211 , "#22FF00"}, // pi+
+
+	{22  , "#00FF))"}, // pi+
 };
 
 
@@ -188,11 +196,13 @@ std::unordered_map<int, std::string> TABLE_PARTICLE_PDG_DEFAULT_COLOR = {
 //------------------------------------------------------------------------------------ 
 //------------------------------------------------------------------------------------ 
 double compute_energy_from_momentum(int pdg, double momentum /* MeV/c */){
+	if (TABLE_PARTICLE_PDG_MASS.find(pdg) == TABLE_PARTICLE_PDG_MASS.end()) return -1.0;
 	double mass = TABLE_PARTICLE_PDG_MASS[pdg];
 	return sqrt(momentum * momentum + mass * mass) - mass;
 }
 
 double compute_momentum_from_energy(int pdg, double energy /* MeV */){
+	if (TABLE_PARTICLE_PDG_MASS.find(pdg) == TABLE_PARTICLE_PDG_MASS.end()) return -1.0;
 	double mass = TABLE_PARTICLE_PDG_MASS[pdg];
 	return sqrt((mass + energy) * (mass + energy) - mass * mass);
 }
@@ -203,6 +213,12 @@ double compute_energy_from_momentum(double mass, double momentum /* MeV/c */){
 
 double compute_momentum_from_energy(double mass, double energy /* MeV */){
 	return sqrt((mass + energy) * (mass + energy) - mass * mass);
+}
+
+double compute_total_energy(int pdg, double kinetic_energy /* MeV */){
+	if (TABLE_PARTICLE_PDG_MASS.find(pdg) == TABLE_PARTICLE_PDG_MASS.end()) return -1.0;
+	double mass = TABLE_PARTICLE_PDG_MASS[pdg];
+	return kinetic_energy + mass;
 }
 
 

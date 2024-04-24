@@ -66,6 +66,8 @@
 #include <TND280UpTrack.hh>
 #include <TND280UpTrackPoint.hh>
 
+#include "logger.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 ExN02EventAction::ExN02EventAction()
@@ -110,11 +112,20 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
   // Accumulate statistics
   //  
 
-  G4cout << "\n\n"
-         << "//////////////////////////////////////////////////////////////\n"
-         << "//  started ExN02EventAction::EndOfEventAction for event " << event->GetEventID() << "\n"
-         << "//////////////////////////////////////////////////////////////\n"
-  << G4endl;
+  // G4cout << "\n\n"
+  //        << "//////////////////////////////////////////////////////////////\n"
+  //        << "//  started ExN02EventAction::EndOfEventAction for event " << event->GetEventID() << "\n"
+  //        << "//////////////////////////////////////////////////////////////\n"
+  // << G4endl;
+  // G4cout << "\033[32m[DBG]\033[33m" << __FILE__ << "\033[0m:\033[36m"
+  //                                   << __LINE__ << "\033[0m:\033[35m"
+  //                                   << __func__ << "\033[0m: "
+  //        << "Event " << event->GetEventID() << ": "
+  //        << "'ExN02EventAction::EndOfEventAction' started" << G4endl;
+  std::stringstream _log_msg;
+  _log_msg << "Event " << event->GetEventID() << ": "
+           << "'ExN02EventAction::EndOfEventAction' started";
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
 
   ///////////////////////////////////////////////////////
   //                                                   //
@@ -126,7 +137,8 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
   // Get the Primary Vertex
   
   G4int vtxNumber=0;
-  for (G4PrimaryVertex* vtx = event->GetPrimaryVertex();vtx;vtx = vtx->GetNext()) {
+  for (G4PrimaryVertex* vtx = event->GetPrimaryVertex();vtx;vtx = vtx->GetNext())
+  {
     ++vtxNumber;
     
     // G4int vtxNumber=0;
@@ -135,28 +147,30 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
     // G4PrimaryVertex* vtx = event->GetPrimaryVertex();
     
     G4cout << "Vertex: " << vtxNumber  
-  	   << " w/ " << vtx->GetNumberOfParticle() << " primaries" 
-  	   << " at " 
-      // << " (" << G4BestUnit(vtx->GetX0(),"Length") 
-      // << ", " << G4BestUnit(vtx->GetY0(),"Length") 
-      // << ", " << G4BestUnit(vtx->GetZ0(),"Length") 
-      // << ", " << G4BestUnit(vtx->GetT0(),"Time") << ")"
-  	   << " (" << vtx->GetX0() / CLHEP::mm
-  	   << ", " << vtx->GetY0() / CLHEP::mm
-  	   << ", " << vtx->GetZ0() / CLHEP::mm 
-  	   << ", " << vtx->GetT0() / CLHEP::second << ")"
-  	   << G4endl;
+           << " w/ " << vtx->GetNumberOfParticle() << " primaries" 
+           << " at " 
+           // << " (" << G4BestUnit(vtx->GetX0(),"Length") 
+           // << ", " << G4BestUnit(vtx->GetY0(),"Length") 
+           // << ", " << G4BestUnit(vtx->GetZ0(),"Length") 
+           // << ", " << G4BestUnit(vtx->GetT0(),"Time") << ")"
+           << " (" << vtx->GetX0() / CLHEP::mm
+           << ", " << vtx->GetY0() / CLHEP::mm
+           << ", " << vtx->GetZ0() / CLHEP::mm 
+           << ", " << vtx->GetT0() / CLHEP::second << ")"
+           << G4endl;
 
     ExN02VertexInfo* vInfo 
       = dynamic_cast<ExN02VertexInfo*>(vtx->GetUserInformation());
-    if (vInfo) {
+    if (vInfo)
+    {
       G4cout << "  Generator: " << vInfo->GetName() << G4endl;
       G4cout << "  Reaction:  " << vInfo->GetReaction() << G4endl;
       G4cout << "  Reac Num:  " << vInfo->GetReactionNum() << G4endl;
       G4cout << "  Weight:    " << vInfo->GetWeight() << G4endl;
       G4cout << "  Prob:      " << vInfo->GetProbability() << G4endl;
     }
-    for (G4int p=0; p<vtx->GetNumberOfParticle(); ++p) {
+    for (G4int p=0; p<vtx->GetNumberOfParticle(); ++p)
+    {
       G4PrimaryParticle* prim = vtx->GetPrimary(p);
       G4ParticleDefinition* partDef = prim->GetG4code();
       G4ThreeVector dir = prim->GetMomentum().unit();
@@ -172,45 +186,48 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
    
     // Get the Incoming Vertex
 
-    if(vInfo){
+    if(vInfo)
+    {
       
       G4cout << "Incoming Vertex:" << vtxNumber << G4endl;
       
       const G4PrimaryVertex *incvtx = vInfo->GetInformationalVertex();
       
       G4cout << " w/ " << incvtx->GetNumberOfParticle() << " primaries" 
-	     << " at " 
-	// << " (" << G4BestUnit(vtx->GetX0(),"Length") 
-	// << ", " << G4BestUnit(vtx->GetY0(),"Length") 
-	// << ", " << G4BestUnit(vtx->GetZ0(),"Length") 
-	// << ", " << G4BestUnit(vtx->GetT0(),"Time") << ")"
-	     << " (" << incvtx->GetX0() / CLHEP::mm
-	     << ", " << incvtx->GetY0() / CLHEP::mm
-	     << ", " << incvtx->GetZ0() / CLHEP::mm 
-	     << ", " << incvtx->GetT0() / CLHEP::second << ")"
-	     << G4endl;
+             << " at " 
+             // << " (" << G4BestUnit(vtx->GetX0(),"Length") 
+             // << ", " << G4BestUnit(vtx->GetY0(),"Length") 
+             // << ", " << G4BestUnit(vtx->GetZ0(),"Length") 
+             // << ", " << G4BestUnit(vtx->GetT0(),"Time") << ")"
+             << " (" << incvtx->GetX0() / CLHEP::mm
+             << ", " << incvtx->GetY0() / CLHEP::mm
+             << ", " << incvtx->GetZ0() / CLHEP::mm 
+             << ", " << incvtx->GetT0() / CLHEP::second << ")"
+             << G4endl;
       
-      for (G4int nu=0; nu<incvtx->GetNumberOfParticle(); ++nu) {
-	G4PrimaryParticle* prim = incvtx->GetPrimary(nu);
-	G4ParticleDefinition* partDef = prim->GetG4code();
-	G4ThreeVector dir = prim->GetMomentum().unit();
-	G4cout << "  " << partDef->GetParticleName() << " "
-	       << prim->GetPDGcode()
-	       << " w/ "
-	       << G4BestUnit(prim->GetMomentum().mag(),"Energy")
-	       << "  Direction: (" << dir.x()
-	       << ", " << dir.y()
-	       << ", " << dir.z() << ")"
-	       << G4endl;	
-	G4int pdg = prim->GetPDGcode();
+      for (G4int nu=0; nu<incvtx->GetNumberOfParticle(); ++nu)
+      {
+        G4PrimaryParticle* prim = incvtx->GetPrimary(nu);
+        G4ParticleDefinition* partDef = prim->GetG4code();
+        G4ThreeVector dir = prim->GetMomentum().unit();
+        G4cout << "  " << partDef->GetParticleName() << " "
+              << prim->GetPDGcode()
+              << " w/ "
+              << G4BestUnit(prim->GetMomentum().mag(),"Energy")
+              << "  Direction: (" << dir.x()
+              << ", " << dir.y()
+              << ", " << dir.z() << ")"
+              << G4endl;	
+        G4int pdg = prim->GetPDGcode();
 	
-	//G4cout << pdg << " " << fabs(pdg) << G4endl;
-	
-	if( fabs(pdg)==12 ||
-	    fabs(pdg)==14 ||
-	    fabs(pdg)==16  ){	
-	  //fVecVtx_NuPDG.push_back(prim->GetPDGcode());
-	}
+        //G4cout << pdg << " " << fabs(pdg) << G4endl;
+        
+        if( fabs(pdg)==12 ||
+            fabs(pdg)==14 ||
+            fabs(pdg)==16  )
+        {	
+          //fVecVtx_NuPDG.push_back(prim->GetPDGcode());
+        }
       }
     }
     // Get the Decay Vertex
@@ -230,13 +247,13 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
   
   G4HCofThisEvent* hce = event->GetHCofThisEvent();
   if (!hce) 
-    {
-      G4ExceptionDescription msg;
-      msg << "No hits collection of this event found." << G4endl; 
-      G4Exception("ExN02EventAction::EndOfEventAction()",
-		  "ExN02Code001", JustWarning, msg);
-      return;
-    }   
+  {
+    G4ExceptionDescription msg;
+    msg << "No hits collection of this event found." << G4endl; 
+    G4Exception("ExN02EventAction::EndOfEventAction()",
+	              "ExN02Code001", JustWarning, msg);
+    return; // WHY RETURN?
+  }
   
 
   
@@ -288,11 +305,11 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
 
   // Print per event (modulo n)
   //  
-  G4int eventID = event->GetEventID();
-  G4int printModulo = G4RunManager::GetRunManager()->GetPrintProgress();
-  if ( ( printModulo > 0 ) && ( eventID % printModulo == 0 ) ) {
-    G4cout << "---> End of event: " << eventID << G4endl;
-  }
+  // G4int eventID = event->GetEventID();
+  // G4int printModulo = G4RunManager::GetRunManager()->GetPrintProgress();
+  // if ( ( printModulo > 0 ) && ( eventID % printModulo == 0 ) ) {
+  //   G4cout << "---> End of event: " << eventID << G4endl;
+  // }
 
   // // Print out the informations from SteppingAction
   //std::cout << std::endl;
@@ -322,13 +339,18 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
   // periodic printing
   //
   //if (eventID < 100 || eventID%100 == 0) {
-  G4cout << ">>> Event " << event->GetEventID() << G4endl;
-  G4cout << "    " << n_trajectories 
-	 << " trajectories stored in this event." << G4endl;
-  //}
-  G4cout << G4endl;
+  // G4cout << ">>> Event " << event->GetEventID() << G4endl;
+  // G4cout << "    " << n_trajectories 
+	//  << " trajectories stored in this event." << G4endl;
+  // //}
+  // G4cout << G4endl;
 
-  
+  // G4cout << "\033[32m[DBG]\033[33m" << __FILE__ << "\033[0m:\033[36m"
+  //                                 << __LINE__ << "\033[0m:\033[35m"
+  //                                 << __func__ << "\033[0m: "
+  //     << n_trajectories <<  " trajectories stored in this event." << G4endl;
+  _log_msg << n_trajectories <<  " trajectories stored in this event.";
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg); 
 
 
 
@@ -352,17 +374,22 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
     
     // The collection name is given by <detector name>/<Primitive Scorer name>.    
 
-    G4cout << "Sensitive detector: " << SDname+"/"+HCname << G4endl;
+    // G4cout << "Sensitive detector: " << SDname+"/"+HCname << G4endl;
+    _log_msg << "Sensitive detector: " << SDname+"/"+HCname;
+    log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg); 
     
     int HCId = sdM->GetCollectionID(SDname+"/"+HCname);
     G4VHitsCollection* g4Hits = hce->GetHC(HCId);
     if (g4Hits->GetSize()<1) continue;
     
     G4int n_hit = g4Hits->GetSize();
-    std::cout << "# of hits = " << n_hit << std::endl;
+    // std::cout << "# of hits = " << n_hit << std::endl;
+    // G4cout << "# of hits = " << n_hit << G4endl;
+    _log_msg << "# of hits = " << n_hit;
+    log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
     
-    for (unsigned int h=0; h<g4Hits->GetSize(); ++h) {                 
-      
+    for (unsigned int h=0; h<g4Hits->GetSize(); ++h)
+    {
       //ND280HitSegment* g4Hit
       //= dynamic_cast<ND280HitSegment*>(g4Hits->GetHit(h)); // used in nd280mc      
       ExN02TrackerHit* g4Hit = dynamic_cast<ExN02TrackerHit*>(g4Hits->GetHit(h));
@@ -374,22 +401,24 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
       //int trackId = g4Hit->GetTrackID();
       
       G4VTrajectory* g4Traj = ND280TrajectoryMap::Get(trackId);
-      if (!g4Traj) {
-	G4ExceptionDescription msg;
-	msg << "Missing trackId: " << trackId << G4endl; 
-	G4Exception("ExN02EventAction::EndOfEventAction()",
-		    "ExN02Code001", FatalException, msg);
-       	continue;
+      if (!g4Traj)
+      {
+        G4ExceptionDescription msg;
+        msg << "Missing trackId: " << trackId << G4endl; 
+        G4Exception("ExN02EventAction::EndOfEventAction()",
+                    "ExN02Code001", FatalException, msg);
+        continue;
       }
 
     
       ND280Trajectory* traj = dynamic_cast<ND280Trajectory*>(g4Traj);
-      if (!traj) {
-	G4ExceptionDescription msg;
-	msg << "Not a ND280Trajectory " << G4endl; 
-	G4Exception("ExN02EventAction::EndOfEventAction()",
-		    "ExN02Code001", FatalException, msg);
-	continue;
+      if (!traj)
+      {
+        G4ExceptionDescription msg;
+        msg << "Not a ND280Trajectory " << G4endl; 
+        G4Exception("ExN02EventAction::EndOfEventAction()",
+                    "ExN02Code001", FatalException, msg);
+        continue;
       }
       
       
@@ -448,13 +477,22 @@ void ExN02EventAction::EndOfEventAction(const G4Event* event)
   //G4RunManager::GetRunManager()->rndmSaveThisEvent();
 
 
-  G4cout << "End of EndOfEvent" << G4endl;
+  // G4cout << "End of EndOfEvent" << G4endl;
 
-  G4cout << "\n\n"
-         << "//////////////////////////////////////////////////////////////\n"
-         << "//  finished ExN02EventAction::EndOfEventAction for event " << event->GetEventID() << "\n"
-         << "//////////////////////////////////////////////////////////////\n"
-  << G4endl;
+  // G4cout << "\n\n"
+  //        << "//////////////////////////////////////////////////////////////\n"
+  //        << "//  finished ExN02EventAction::EndOfEventAction for event " << event->GetEventID() << "\n"
+  //        << "//////////////////////////////////////////////////////////////\n"
+  // << G4endl;
+  // G4cout << "\033[32m[DBG]\033[33m" << __FILE__ << "\033[0m:\033[36m"
+  //                               << __LINE__ << "\033[0m:\033[35m"
+  //                               << __func__ << "\033[0m: "
+  //   << "Event " << event->GetEventID() << ": "
+  //        << "'ExN02EventAction::EndOfEventAction' finished" << G4endl;
+  _log_msg << "Event " << event->GetEventID() << ": "
+           << "'ExN02EventAction::EndOfEventAction' finished";
+  // log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg.str());
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
 
 }
 

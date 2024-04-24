@@ -92,6 +92,12 @@ public :
   void SetEdepP0DECal(double edep)  {fEdepP0DECal=edep;};
   void SetEdepUSECalP0D(double edep){fEdepUSECalP0D=edep;};
 
+  void SetLengthInSFGD(double LengthInSFGD)               { fLengthInSFGD = LengthInSFGD; }
+  void SetEdepInSFGD(double EdepInSFGD)                   { fEdepInSFGD = EdepInSFGD; }
+  void SetLeftSFGDwithMometum(double x,double y, double z){ fLeftSFGDwithMometum.SetXYZ(x,y,z); }
+  void SetIsStartedInSFGD(bool IsStartedInSFGD)           { fIsStartedInSFGD = IsStartedInSFGD; }
+  void SetIsStoppedInSFGD(bool IsStoppedInSFGD)           { fIsStoppedInSFGD = IsStoppedInSFGD; }
+
   int GetTrackID() {return fTrackID;};
   int GetParentID() {return fParentID;};
   string GetProcessName(){return fProcessName;};
@@ -144,6 +150,12 @@ public :
   double GetEdepBrlECal()  {return fEdepBrlECal;};
   double GetEdepP0DECal()  {return fEdepP0DECal;};
   double GetEdepUSECalP0D(){return fEdepUSECalP0D;};
+
+  double GetLengthInSFGD()          { return fLengthInSFGD; };
+  double GetEdepInSFGD()            { return fEdepInSFGD; };
+  TVector3 GetLeftSFGDwithMometum() { return fLeftSFGDwithMometum; };
+  bool GetIsStartedInSFGD()         { return fIsStartedInSFGD; };
+  bool GetIsStoppedInSFGD()         { return fIsStoppedInSFGD; };
   
   void PrintTrack();
 
@@ -202,6 +214,12 @@ private :
   double fEdepBrlECal;
   double fEdepP0DECal;
   double fEdepUSECalP0D;
+
+  double fLengthInSFGD;
+  double fEdepInSFGD;
+  TVector3 fLeftSFGDwithMometum;
+  bool fIsStartedInSFGD;
+  bool fIsStoppedInSFGD;
 
   ClassDef(TND280UpTrack,2)
 };

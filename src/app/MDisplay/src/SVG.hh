@@ -1,3 +1,15 @@
+/**
+ * @file SVG.hh
+ *
+ * @brief SVG parser (in general -- xml parser)
+ *
+ * @creation_date     { xx.xx.2024 }
+ * @modification_date ( 20.03.2024 )
+ *
+ * @author Alexandr Shvartsman
+ * Contact: shvartsman.as@phystech.edu, shvartsman@inr.ru
+ *
+ */
 
 #include<iostream>
 #include<string>

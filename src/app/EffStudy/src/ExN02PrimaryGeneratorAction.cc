@@ -50,6 +50,8 @@
 //#include "G4SystemOfUnits.hh" // NEW GLOBAL
 #include <CLHEP/Units/SystemOfUnits.h>
 
+#include "logger.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 ExN02PrimaryGeneratorAction::ExN02PrimaryGeneratorAction()
@@ -102,12 +104,16 @@ void ExN02PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   // This function is called at the begining of event
 
-  G4cout << "\n\n"
-         << "//////////////////////////////////////////////////////////////////////////\n"
-         << "//  started ExN02PrimaryGeneratorAction::GeneratePrimaries for event " << anEvent->GetEventID() << "\n"
-         << "//////////////////////////////////////////////////////////////////////////\n"
-         << "//  seed: " << CLHEP::HepRandom::getTheSeed() << "\n"
-  << G4endl;
+  // G4cout << "\n\n"
+  //        << "//////////////////////////////////////////////////////////////////////////\n"
+  //        << "//  started ExN02PrimaryGeneratorAction::GeneratePrimaries for event " << anEvent->GetEventID() << "\n"
+  //        << "//////////////////////////////////////////////////////////////////////////\n"
+  //        << "//  seed: " << CLHEP::HepRandom::getTheSeed() << "\n"
+  // << G4endl;
+  std::stringstream _log_msg;
+  _log_msg << " SEED: " << CLHEP::HepRandom::getTheSeed();
+  // log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg.str());
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
 
   bool doGun = false;
   if(fGeneratorType=="ParticleGun") doGun = true;
@@ -398,11 +404,11 @@ void ExN02PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     "MyCode0002",FatalException, msg);        
   }
 
-  G4cout << "\n\n"
-         << "//////////////////////////////////////////////////////////////////////////\n"
-         << "//  finished ExN02PrimaryGeneratorAction::GeneratePrimaries for event " << anEvent->GetEventID() << "\n"
-         << "//////////////////////////////////////////////////////////////////////////\n"
-  << G4endl;
+  // G4cout << "\n\n"
+  //        << "//////////////////////////////////////////////////////////////////////////\n"
+  //        << "//  finished ExN02PrimaryGeneratorAction::GeneratePrimaries for event " << anEvent->GetEventID() << "\n"
+  //        << "//////////////////////////////////////////////////////////////////////////\n"
+  // << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

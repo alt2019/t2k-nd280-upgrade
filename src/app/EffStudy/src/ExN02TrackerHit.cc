@@ -48,7 +48,8 @@
 
 #define SideView 0 // resolution of vertical-direction
 
-G4Allocator<ExN02TrackerHit> ExN02TrackerHitAllocator;
+// G4Allocator<ExN02TrackerHit> ExN02TrackerHitAllocator;
+G4Allocator<ExN02TrackerHit>* ExN02TrackerHitAllocator;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

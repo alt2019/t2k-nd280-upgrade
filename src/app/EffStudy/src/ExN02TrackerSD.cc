@@ -87,6 +87,12 @@ void ExN02TrackerSD::Initialize(G4HCofThisEvent* HCE)
 
 G4bool ExN02TrackerSD::ProcessHits(G4Step* aStep,G4TouchableHistory*)
 {
+  std::stringstream _log_msg;
+  // _log_msg << "'ExN02TrackerSD::ProcessHits' started";
+  _log_msg << "Track: " << aStep->GetTrack()->GetTrackID() << ","
+                        << aStep->GetTrack()->GetParentID() << " "
+                        << aStep->GetTrack()->GetParticleDefinition()->GetPDGEncoding();
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
 
   // Take inputs
   ND280RootPersistencyManager* InputPersistencyManager
@@ -147,6 +153,9 @@ G4bool ExN02TrackerSD::ProcessHits(G4Step* aStep,G4TouchableHistory*)
   G4TouchableHandle theTouchable = preStepPoint->GetTouchableHandle();
   G4String touch_namedet = theTouchable->GetVolume()->GetLogicalVolume()->GetName();
   G4VPhysicalVolume * worldVolumePointer = theTouchable->GetHistory()->GetVolume(0);
+
+  _log_msg << "theTouchable: " << touch_namedet << ", worldVolume: " << worldVolumePointer->GetLogicalVolume()->GetName();
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
  
   
   // Take the position in the local coordinate system (defined in DetectorConstruction)
@@ -213,7 +222,10 @@ G4bool ExN02TrackerSD::ProcessHits(G4Step* aStep,G4TouchableHistory*)
     currentHit->AddStep(aStep);
 
   } 
-  NSteps_++;  
+  NSteps_++;
+
+  // _log_msg << "'ExN02TrackerSD::ProcessHits' finished";
+  // log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
     
   return true;
 
@@ -223,13 +235,32 @@ G4bool ExN02TrackerSD::ProcessHits(G4Step* aStep,G4TouchableHistory*)
 
 void ExN02TrackerSD::EndOfEvent(G4HCofThisEvent*)
 {
+  /// !!!DEFAULT!!!
+  // if (verboseLevel>0) { 
+  //   G4int NbHits = trackerCollection->entries();
+  //   G4cout << "\n-------->Hits Collection: in this event they are " << NbHits 
+	//    << " hits in the tracker chambers: " << G4endl;
+  //   //for (G4int i=0;i<NbHits;i++) (*trackerCollection)[i]->Print();
+  // }
 
-  if (verboseLevel>0) { 
-    G4int NbHits = trackerCollection->entries();
-    G4cout << "\n-------->Hits Collection: in this event they are " << NbHits 
-	   << " hits in the tracker chambers: " << G4endl;
-    //for (G4int i=0;i<NbHits;i++) (*trackerCollection)[i]->Print();
-  } 
+  G4int NHits = trackerCollection->entries();
+  std::stringstream _log_msg;
+  _log_msg << "Hits Collection: in this event there are " << NHits << " hits in the tracker chambers.";
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
+  
+  // bool has_repeats = false;
+  std::vector<int> ptrs_ids;
+  for (auto i = 0; i < NHits; ++i)
+  {
+    ExN02TrackerHit *tmpHit = (*trackerCollection)[i];
+    auto k = reinterpret_cast<std::uintptr_t>(tmpHit);
+    if (std::find(ptrs_ids.begin(), ptrs_ids.end(),k)!=ptrs_ids.end())
+    {
+      _log_msg << "There are hits with repeated pointers!!!";
+      log("ERR", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
+    }
+    ptrs_ids.push_back(k);
+  }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

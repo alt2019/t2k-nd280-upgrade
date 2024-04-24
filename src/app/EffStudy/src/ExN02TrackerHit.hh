@@ -42,6 +42,8 @@
 
 #include "TND280UpHit.hh" 
 
+#include "logger.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class G4Step;
@@ -62,6 +64,7 @@ public:
 
   ExN02TrackerHit();
   ~ExN02TrackerHit();
+  // virtual ~ExN02TrackerHit(); /// no effect
   ExN02TrackerHit(const ExN02TrackerHit&);
   const ExN02TrackerHit& operator=(const ExN02TrackerHit&);
   G4int operator==(const ExN02TrackerHit&) const;
@@ -235,19 +238,27 @@ typedef G4THitsCollection<ExN02TrackerHit> ExN02TrackerHitsCollection;
 
 // extern G4Allocator<ExN02TrackerHit> ExN02TrackerHitAllocator;
 
-#if defined G4TRACKING_ALLOC_EXPORT
-extern G4DLLEXPORT G4Allocator<ExN02TrackerHit> ExN02TrackerHitAllocator;
-#else
-extern G4DLLIMPORT G4Allocator<ExN02TrackerHit> ExN02TrackerHitAllocator;
-#endif
+// #if defined G4TRACKING_ALLOC_EXPORT
+// extern G4DLLEXPORT G4Allocator<ExN02TrackerHit> ExN02TrackerHitAllocator;
+// #else
+// extern G4DLLIMPORT G4Allocator<ExN02TrackerHit> ExN02TrackerHitAllocator;
+// #endif
+
+extern G4ThreadLocal G4Allocator<ExN02TrackerHit>* ExN02TrackerHitAllocator;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 inline void* ExN02TrackerHit::operator new(size_t)
 {
-  void *aHit;
-  aHit = (void *) ExN02TrackerHitAllocator.MallocSingle();
-  return aHit;
+  if (!ExN02TrackerHitAllocator) {
+       ExN02TrackerHitAllocator = new G4Allocator<ExN02TrackerHit>;
+  }
+
+  return (void*)ExN02TrackerHitAllocator->MallocSingle();
+
+  // void *aHit;
+  // aHit = (void *) ExN02TrackerHitAllocator.MallocSingle();
+  // return aHit;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -260,7 +271,19 @@ inline void ExN02TrackerHit::operator delete(void *aHit)
   // G4cout << " === hit in " << ((ExN02TrackerHit*) aHit)->fDetID << G4endl;
   // G4cout << " ===  " << (ExN02TrackerHit*) aHit << G4endl;
   // ((ExN02TrackerHit*) aHit)->Print(); // segfault
-  ExN02TrackerHitAllocator.FreeSingle((ExN02TrackerHit*) aHit); /// default
+  
+  // auto i = reinterpret_cast<std::uintptr_t>(aHit);
+  // std::stringstream _log_msg;
+  // _log_msg << "before: ptr: " << i;
+  // log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
+
+  // ExN02TrackerHitAllocator.FreeSingle((ExN02TrackerHit*) aHit); /// default
+  ExN02TrackerHitAllocator->FreeSingle((ExN02TrackerHit*) aHit); /// default
+
+  // i = reinterpret_cast<std::uintptr_t>(aHit);
+  // _log_msg << "after: ptr: " << i;
+  // log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
+  
   // G4cout << " === ExN02TrackerHit::operator delete finishes " << G4endl;
 
   // ExN02TrackerHit* th = static_cast<ExN02TrackerHit*>(aHit);

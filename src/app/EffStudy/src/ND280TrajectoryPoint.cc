@@ -16,6 +16,8 @@
 
 //#include <TND280Log.hxx>
 
+#include "logger.hh"
+
 G4Allocator<ND280TrajectoryPoint> aND280TrajPointAllocator;
 
 ND280TrajectoryPoint::ND280TrajectoryPoint()
@@ -25,18 +27,27 @@ ND280TrajectoryPoint::ND280TrajectoryPoint()
     fLogVolName("OutofWorld"), 
     fPrevPosition(0,0,0),
     fPostPosition(0,0,0), fSavePoint(false),
-    fPreProcessName(""), fPostProcessName(""),
-    fMaterialName("")/*, fPreMaterialName(""), fPostMaterialName("")*/ { }
+    fPreProcessName("NONE"), fPostProcessName("NONE"),
+    fMaterialName("OutofWorldMaterial"),
+    fPreProcessType(G4ProcessType::fNotDefined), fPostProcessType(G4ProcessType::fNotDefined)
+    /*, fPreMaterialName(""), fPostMaterialName("")*/ { }
 
 // This is the one used --> See ND280Trajectory::AppendStep(G4Step)
 ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)
   : G4TrajectoryPoint(aStep->GetPostStepPoint()->GetPosition())
 {
-  fPreProcessName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)'"; // debug
-  fPostProcessName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)'"; // debug
-  // fPreMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)'"; // debug
-  // fPostMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)'"; // debug
-  fMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)'"; // debug
+  // fPreProcessName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)'"; // debug
+  // fPostProcessName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)'"; // debug
+  // // fPreMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)'"; // debug
+  // // fPostMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)'"; // debug
+  // fMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)'"; // debug
+  fPreProcessName = "NONE(aStep)"; // debug
+  fPostProcessName = "NONE(aStep)"; // debug
+  // fPreMaterialName = "NONE(aStep)"; // debug
+  // fPostMaterialName = "NONE(aStep)"; // debug
+  fMaterialName = "NONE(aStep)"; // debug
+  fPreProcessType = G4ProcessType::fNotDefined;
+  fPostProcessType = G4ProcessType::fNotDefined;
 
   fTime = aStep->GetPostStepPoint()->GetGlobalTime();
   
@@ -79,8 +90,8 @@ ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)
   }
 
 
-  //  fPreMaterialName = (aStep->GetPreStepPoint()->GetMaterial()) ? aStep->GetPreStepPoint()->GetMaterial()->GetName() : "OutOfWorldMaterial";
-  //  fPostMaterialName = (aStep->GetPostStepPoint()->GetMaterial()) ? aStep->GetPostStepPoint()->GetMaterial()->GetName() : "OutOfWorldMaterial";
+  // fPreMaterialName = (aStep->GetPreStepPoint()->GetMaterial()) ? aStep->GetPreStepPoint()->GetMaterial()->GetName() : "OutOfWorldMaterial";
+  // fPostMaterialName = (aStep->GetPostStepPoint()->GetMaterial()) ? aStep->GetPostStepPoint()->GetMaterial()->GetName() : "OutOfWorldMaterial";
   
   if(aStep->GetPostStepPoint()->GetStepStatus()==fGeomBoundary)
     fIsOnBoundary = true;
@@ -91,17 +102,76 @@ ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Step* aStep)
   fPostPosition = aStep->GetPostStepPoint()->GetPosition();
 
   fSavePoint = false;
+
+  /// !!! NEW !!!
+  if (aStep->GetPreStepPoint()->GetProcessDefinedStep())
+  {
+    fPreProcessName = aStep->GetPreStepPoint()->GetProcessDefinedStep()->GetProcessName();
+    fPreProcessType = aStep->GetPreStepPoint()->GetProcessDefinedStep()->GetProcessType();
+  }
+  if (aStep->GetPostStepPoint()->GetProcessDefinedStep())
+  {
+    fPostProcessName = aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
+    fPostProcessType = aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessType();
+  }
+
+  const std::vector< const G4Track * > * SecondaryTracksAtThisStep = aStep->GetSecondaryInCurrentStep();
+  if (SecondaryTracksAtThisStep)
+  {
+    for (auto trk: *SecondaryTracksAtThisStep)
+    {
+      int ID = trk->GetTrackID();
+
+      std::string process_name;
+      const G4VProcess* proc = trk->GetCreatorProcess();
+      if (proc) process_name = proc->GetProcessName();
+      else process_name = "primary";
+
+      G4ThreeVector position = trk->GetPosition();
+
+      // fSecondariesIds.push_back(ID);
+      // fSecondariesIds.push_back({trk->GetPDG(), trk->GetKineticEnergy()});
+      // fSecondariesIds.push_back({trk->GetParticleDefinition()->GetPDGEncoding(), trk->GetKineticEnergy()});
+      fSecondariesIds.push_back({
+        trk->GetParticleDefinition()->GetPDGEncoding(),
+        trk->GetKineticEnergy(),
+        trk->GetMomentum().x(),
+        trk->GetMomentum().y(),
+        trk->GetMomentum().z(),
+        process_name,
+        position.x(),
+        position.y(),
+        position.z()
+      });
+
+      std::stringstream _log_msg;
+      _log_msg << "[Track: " << aStep->GetTrack()->GetTrackID() << ","
+                        << aStep->GetTrack()->GetParentID() << " "
+                        << aStep->GetTrack()->GetParticleDefinition()->GetPDGEncoding() << "] "
+               << "Secondary track: ID:" << ID << ","
+                                         <<" PDG:" << trk->GetParticleDefinition()->GetPDGEncoding() << ","
+                                         << " Ek0:" << trk->GetKineticEnergy();
+      log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
+    }
+  }
 }
 
 // Used for the first point 
 ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)
     : G4TrajectoryPoint(aTrack->GetPosition())
   {
-    fPreProcessName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)'"; // debug
-    fPostProcessName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)'"; // debug
-    // fPreMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)'"; // debug
-    // fPostMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)'"; // debug
-    fMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)'"; // debug
+    // fPreProcessName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)'"; // debug
+    // fPostProcessName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)'"; // debug
+    // // fPreMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)'"; // debug
+    // // fPostMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)'"; // debug
+    // fMaterialName = "called in 'ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)'"; // debug
+    fPreProcessName = "NONE(aTrack)"; // debug
+    fPostProcessName = "NONE(aTrack)"; // debug
+    // fPreMaterialName = "NONE(aTrack)"; // debug
+    // fPostMaterialName = "NONE(aTrack)"; // debug
+    fMaterialName = "NONE(aTrack)"; // debug
+    fPreProcessType = G4ProcessType::fNotDefined;
+    fPostProcessType = G4ProcessType::fNotDefined;
   
     fTime = aTrack->GetGlobalTime();
     fMomentum = aTrack->GetMomentum(); // It takes the preStep
@@ -136,6 +206,40 @@ ND280TrajectoryPoint::ND280TrajectoryPoint(const G4Track* aTrack)
     fIsOnBoundary = false; // first track point not on boundary
 
     fSavePoint = false;
+
+    /// !!! NEW !!!
+    // if (aTrack->GetStep()->GetPreStepPoint()->GetProcessDefinedStep()) // segfault
+    // {
+    //   fPreProcessName = aTrack->GetStep()->GetPreStepPoint()->GetProcessDefinedStep()->GetProcessName();
+    // }
+    // if (aTrack->GetStep()->GetPostStepPoint()->GetProcessDefinedStep())
+    // {
+    //   fPostProcessName = aTrack->GetStep()->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
+    // }
+    if (!aTrack->GetCreatorProcess())
+    {
+      fPreProcessName = "primary"; // no creator process
+      fPostProcessName = "primary"; // no creator process
+      fPreProcessType = G4ProcessType::fNotDefined;
+      fPostProcessType = G4ProcessType::fNotDefined;
+    }
+    else
+    {
+      fPreProcessName = aTrack->GetCreatorProcess()->GetProcessName(); // no creator process
+      fPostProcessName = aTrack->GetCreatorProcess()->GetProcessName(); // no creator process
+      fPreProcessType = aTrack->GetCreatorProcess()->GetProcessType();
+      fPostProcessType = aTrack->GetCreatorProcess()->GetProcessType();
+    }
+
+    // const std::vector< const G4Track * > * SecondaryTracksAtThisStep = aStep->GetSecondaryInCurrentStep();
+    // if (SecondaryTracksAtThisStep)
+    // {
+    //   for (auto trk: *SecondaryTracksAtThisStep)
+    //   {
+    //     int ID = trk->GetTrackID();
+    //     fSecondariesIds.push_back(ID);
+    //   }
+    // }
 }
 
 ND280TrajectoryPoint::ND280TrajectoryPoint(const ND280TrajectoryPoint &right)
@@ -157,6 +261,9 @@ ND280TrajectoryPoint::ND280TrajectoryPoint(const ND280TrajectoryPoint &right)
     // fPreMaterialName = right.fPreMaterialName;
     // fPostMaterialName = right.fPostMaterialName;
     fMaterialName = right.fMaterialName;
+    fPreProcessType = right.fPreProcessType;
+    fPostProcessType = right.fPostProcessType;
+    fSecondariesIds = right.fSecondariesIds;
 }
 
 void ND280TrajectoryPoint::MarkPoint(){
@@ -229,6 +336,18 @@ const std::map<G4String,G4AttDef>* ND280TrajectoryPoint::GetAttDefs() const {
         (*store)[MaterialName] =
             G4AttDef(MaterialName, "MaterialName", "Physics", "", "G4String");
 
+        G4String PreProcessType("PreProcessType");
+        (*store)[PreProcessType] =
+            G4AttDef(PreProcessType, "PreProcessType", "Physics", "", "G4String");
+
+        G4String PostProcessType("PostProcessType");
+        (*store)[PostProcessType] =
+            G4AttDef(PostProcessType, "PostProcessType", "Physics", "", "G4String");
+
+        G4String SecondariesIds("SecondariesIds");
+        (*store)[SecondariesIds] =
+            G4AttDef(SecondariesIds, "SecondariesIds", "Physics", "", "G4String");
+
     }
     return store;
 }
@@ -261,6 +380,9 @@ std::vector<G4AttValue>* ND280TrajectoryPoint::CreateAttValues() const {
     // values->push_back(G4AttValue("PreMaterialName",fPreMaterialName,""));
     // values->push_back(G4AttValue("PostMaterialName",fPostMaterialName,""));
     values->push_back(G4AttValue("MaterialName",fMaterialName,""));
+    values->push_back(G4AttValue("PreProcessType",fPreProcessType,""));
+    values->push_back(G4AttValue("PostProcessType",fPostProcessType,""));
+    // values->push_back(G4AttValue("SecondariesIds",fSecondariesIds,""));
 
     //#ifdef G4ATTDEBUG
     //ND280Info(G4AttCheck(values,GetAttDefs()));

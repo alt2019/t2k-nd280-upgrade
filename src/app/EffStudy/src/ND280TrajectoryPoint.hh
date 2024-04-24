@@ -6,6 +6,8 @@
 #include <G4ThreeVector.hh>
 #include <G4Allocator.hh>
 #include <G4StepStatus.hh>
+#include <G4ProcessType.hh>
+#include <G4Track.hh>
 
 class G4Track;
 class G4Step;
@@ -59,11 +61,19 @@ public:
   /// Get process name at current step
   G4String GetPreProcessName() const { return fPreProcessName; }
   G4String GetPostProcessName() const { return fPostProcessName; }
+  G4ProcessType GetPreProcessType() const { return fPreProcessType; }
+  G4ProcessType GetPostProcessType() const { return fPostProcessType; }
 
   /// get current material name of pointstep
   // G4String GetPreMaterialName() const { return fPreMaterialName; }
   // G4String GetPostMaterialName() const { return fPostMaterialName; }
   G4String GetMaterialName() const { return fMaterialName; }
+
+  // std::vector<int> GetSecondariesIds() {return fSecondariesIds;};
+  // std::vector<std::pair<int, double>> GetSecondariesIds() {return fSecondariesIds;};
+  // std::vector<std::tuple<int, double, double, double, double>> GetSecondariesIds() {return fSecondariesIds;};
+  // std::vector<std::tuple<int, double, double, double, double, std::string>> GetSecondariesIds() {return fSecondariesIds;};
+  std::vector<std::tuple<int, double, double, double, double, std::string, double, double, double>> GetSecondariesIds() {return fSecondariesIds;};
   
   // Get method for HEPRep style attributes
   
@@ -108,7 +118,14 @@ private:
   G4String fMaterialName; 
   // G4String fPreMaterialName;
   // G4String fPostMaterialName;
+  G4ProcessType fPreProcessType;
+  G4ProcessType fPostProcessType;
   
+  // std::vector<int> fSecondariesIds;
+  // std::vector<std::pair<int, double>> fSecondariesIds;
+  // std::vector<std::tuple<int, double, double, double, double>> fSecondariesIds;
+  // std::vector<std::tuple<int, double, double, double, double, std::string>> fSecondariesIds;
+  std::vector<std::tuple<int, double, double, double, double, std::string, double, double, double>> fSecondariesIds;
 };
 
 #if defined G4TRACKING_ALLOC_EXPORT

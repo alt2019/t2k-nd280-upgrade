@@ -343,9 +343,9 @@ G4LogicalVolume* ND280CubeScintConstructor::GetPiece(void) {
 				    GetName()+"/Extrusion/Core");
     
   // Define the volumes of plastic scintillator and reflector as sensitive detector
-  cubeVolume->SetSensitiveDetector( aTrackerSD ); 
+  // cubeVolume->SetSensitiveDetector( aTrackerSD ); 
   scintVolume->SetSensitiveDetector( aTrackerSD ); 
-  extrusionVolume->SetSensitiveDetector( aTrackerSD ); 
+  // extrusionVolume->SetSensitiveDetector( aTrackerSD ); 
 
   
   // Place the scintillator inside the extrusion volume
@@ -489,12 +489,12 @@ G4LogicalVolume* ND280CubeScintConstructor::GetPiece(void) {
     }
 
     // Set hole & fiber as sensitive detector 
-    holeAlongXVolume->SetSensitiveDetector( aTrackerSD );
-    holeAlongYVolume->SetSensitiveDetector( aTrackerSD );
-    holeAlongZVolume->SetSensitiveDetector( aTrackerSD );
-    fiberAlongXVolume->SetSensitiveDetector( aTrackerSD );
-    fiberAlongYVolume->SetSensitiveDetector( aTrackerSD );
-    fiberAlongZVolume->SetSensitiveDetector( aTrackerSD );
+    // holeAlongXVolume->SetSensitiveDetector( aTrackerSD );
+    // holeAlongYVolume->SetSensitiveDetector( aTrackerSD );
+    // holeAlongZVolume->SetSensitiveDetector( aTrackerSD ); 
+    // fiberAlongXVolume->SetSensitiveDetector( aTrackerSD );
+    // fiberAlongYVolume->SetSensitiveDetector( aTrackerSD );
+    // fiberAlongZVolume->SetSensitiveDetector( aTrackerSD );
 
     
     // Place the holes inside the cube in order to be sure it's filled with "Air"

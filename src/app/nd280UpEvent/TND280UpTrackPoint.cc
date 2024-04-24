@@ -39,6 +39,8 @@ TND280UpTrackPoint::TND280UpTrackPoint(){
   fPreProcessName = "test pre-process name";
   fPostProcessName = "test post-process name";
   fMaterialName = "test material name";
+  fPreProcessType = G4ProcessType::fNotDefined;
+  fPostProcessType = G4ProcessType::fNotDefined;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......  
@@ -66,6 +68,8 @@ TND280UpTrackPoint::~TND280UpTrackPoint(){
   fPreProcessName = "";
   fPostProcessName = "";
   fMaterialName = "";
+  fPreProcessType = G4ProcessType::fNotDefined;
+  fPostProcessType = G4ProcessType::fNotDefined;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......  
@@ -99,6 +103,8 @@ void TND280UpTrackPoint::PrintTrackPoint()
   cout << "preProcessName: " << fPreProcessName << endl;
   cout << "postProcessName: " << fPostProcessName << endl;
   cout << "materialName: " << fMaterialName << endl;
+  cout << "PreProcessType: " << fPreProcessType << endl;
+  cout << "PostProcessType: " << fPostProcessType << endl;
   cout << endl;
   cout << "oooooooooooooooooooooooooooooooo" << endl;
   cout << endl;

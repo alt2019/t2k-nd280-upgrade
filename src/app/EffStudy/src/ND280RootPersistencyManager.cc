@@ -50,6 +50,10 @@
 
 //#include "G4ProcessManager.hh"
 
+
+#include "logger.hh"
+std::stringstream _log_msg;
+
 TROOT root("ROOT","Root of Everything");
 
 ND280RootPersistencyManager::ND280RootPersistencyManager() 
@@ -458,7 +462,18 @@ bool ND280RootPersistencyManager::Close() {
   return true;
 }
 
-bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
+bool ND280RootPersistencyManager::Store(const G4Event* anEvent)
+{
+
+  // G4cout << "\n\n"
+  //        << "//////////////////////////////////////////////////////////////\n"
+  //        << "//  started ND280RootPersistencyManager::Store for event " << anEvent->GetEventID() << "\n"
+  //        << "//////////////////////////////////////////////////////////////\n"
+  // << G4endl;
+  G4int log_event_id = anEvent->GetEventID();
+  _log_msg << "Event " << log_event_id << ": "
+           << "'ND280RootPersistencyManager::Store' started";
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
 
   //G4ProcessManager* pmanager = particle->GetProcessManager();
   //pmanager->
@@ -471,13 +486,13 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
   
   G4HCofThisEvent* hce = anEvent->GetHCofThisEvent();
   if (!hce) 
-    {
-      G4ExceptionDescription msg;
-      msg << "No hits collection of this event found." << G4endl; 
-      G4Exception("ExN02EventAction::EndOfEventAction()",
-		  "ExN02Code001", JustWarning, msg);
-      return false;
-    }   
+  {
+    G4ExceptionDescription msg;
+    msg << "No hits collection of this event found." << G4endl; 
+    G4Exception("ExN02EventAction::EndOfEventAction()",
+	  "ExN02Code001", JustWarning, msg);
+    return false;
+  }   
   
   if (!hce) return false;
   G4SDManager *sdM = G4SDManager::GetSDMpointer();
@@ -505,6 +520,8 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
   //
   // Store the hits
   // 
+  _log_msg << "Event " << log_event_id << ": " << "Saving hits...";
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
 
   for (int i=0; i<hcT->entries(); ++i) {                                          
                                             
@@ -513,16 +530,25 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
     
     // The collection name is given by <detector name>/<Primitive Scorer name>.    
 
-    G4cout << "Sensitive detector: " << SDname+"/"+HCname << G4endl;
+    // G4cout << "Sensitive detector: " << SDname+"/"+HCname << G4endl;
+    _log_msg << "Event " << log_event_id << ": " << "Sensitive detector: " << SDname+"/"+HCname;
+    log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
     
     int HCId = sdM->GetCollectionID(SDname+"/"+HCname);
     G4VHitsCollection* g4Hits = hce->GetHC(HCId);
+    ///
+    _log_msg << "Event " << log_event_id << ": " << "g4Hits->GetSize(): " << g4Hits->GetSize();
+    log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
+    ///
     if (g4Hits->GetSize()<1) continue;
-    
+
     G4int n_hit = g4Hits->GetSize();
-    std::cout << "# of hits = " << n_hit << std::endl;
+    // std::cout << "# of hits = " << n_hit << std::endl;
+    _log_msg << "Event " << log_event_id << ": " << "# of hits = " << n_hit;
+    log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
     
-    for (unsigned int h=0; h<g4Hits->GetSize(); ++h) {                 
+    for (unsigned int h=0; h<g4Hits->GetSize(); ++h)
+    {                 
 
       ExN02TrackerHit* g4Hit = dynamic_cast<ExN02TrackerHit*>(g4Hits->GetHit(h));
       TND280UpHit *nd280Hit = dynamic_cast<TND280UpHit*>(g4Hit); // ExN02TrackerHit inherits from TND280UpHit
@@ -656,9 +682,12 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
   //
   // Store the primary Vertices
   //
+  _log_msg << "Event " << log_event_id << ": " << "Saving primary vertices...";
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
   
   G4int vtxNumber=0;
-  for (G4PrimaryVertex* vtx = anEvent->GetPrimaryVertex();vtx;vtx = vtx->GetNext()) {
+  for (G4PrimaryVertex* vtx = anEvent->GetPrimaryVertex();vtx;vtx = vtx->GetNext())
+  {
     
     TND280UpVertex *nd280Vertex = new TND280UpVertex("PrimaryVertex");
     nd280Vertex->SetVertexID(vtxNumber);
@@ -694,33 +723,34 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
     
     // Get the Incoming Vertex
     
-    if(vInfo){
-      
+    if(vInfo)
+    {  
       const G4PrimaryVertex *incvtx = vInfo->GetInformationalVertex();
       
       // Loop over incoming particles
-      for (G4int nu=0; nu<incvtx->GetNumberOfParticle(); ++nu) {
+      for (G4int nu=0; nu<incvtx->GetNumberOfParticle(); ++nu)
+      {
 	
-	// Define the vertex track
-	TND280UpTrack *nd280VtxTrack = new TND280UpTrack();
-	
-	G4PrimaryParticle* prim = incvtx->GetPrimary(nu);
-	//G4ParticleDefinition* partDef = prim->GetG4code();
-	G4ThreeVector dir = prim->GetMomentum().unit();
-	
-	double momX = prim->GetMomentum().x();
-	double momY = prim->GetMomentum().y();
-	double momZ = prim->GetMomentum().z();
-	nd280VtxTrack->SetInitMom(momX,momY,momZ);
-	
-	int pdg = prim->GetPDGcode();    
-	nd280VtxTrack->SetPDG(pdg);
-	
-	// Fill the vertex with the ingoing track
-	nd280Vertex->AddInTrack(nd280VtxTrack);
-	
-	//delete nd280VtxTrack; 
-	//nd280VtxTrack=NULL;
+        // Define the vertex track
+        TND280UpTrack *nd280VtxTrack = new TND280UpTrack();
+        
+        G4PrimaryParticle* prim = incvtx->GetPrimary(nu);
+        //G4ParticleDefinition* partDef = prim->GetG4code();
+        G4ThreeVector dir = prim->GetMomentum().unit();
+        
+        double momX = prim->GetMomentum().x();
+        double momY = prim->GetMomentum().y();
+        double momZ = prim->GetMomentum().z();
+        nd280VtxTrack->SetInitMom(momX,momY,momZ);
+        
+        int pdg = prim->GetPDGcode();    
+        nd280VtxTrack->SetPDG(pdg);
+        
+        // Fill the vertex with the ingoing track
+        nd280Vertex->AddInTrack(nd280VtxTrack);
+        
+        //delete nd280VtxTrack; 
+        //nd280VtxTrack=NULL;
       }
       
       //
@@ -730,8 +760,8 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
       nd280Vertex->SetReacModeString(vInfo->GetReaction());
     }  
     nd280Vertex->SetPosition(vtx->GetX0()/CLHEP::mm,
-      vtx->GetY0()/CLHEP::mm,
-      vtx->GetZ0()/CLHEP::mm);
+                             vtx->GetY0()/CLHEP::mm,
+                             vtx->GetZ0()/CLHEP::mm);
     nd280Vertex->SetTime(vtx->GetT0()/CLHEP::second);
 
     // Add the vertex to the event
@@ -750,10 +780,13 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
 
   //                                          
   // Store the track in the ND280 event 
-  //                                          
+  //
+  _log_msg << "Event " << log_event_id << ": " << "Saving tracks...";
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);                                   
   
   const G4TrajectoryContainer* trajectories = anEvent->GetTrajectoryContainer();
-  if (!trajectories) {
+  if (!trajectories)
+  {
     G4ExceptionDescription msg;
     msg << "No Trajectories" << G4endl; 
     G4Exception("ExN02EventAction::EndOfEventAction()",
@@ -763,16 +796,76 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
 
 
  
-  cout << "ND280RootPersistencyManager::Store()" << endl;
-  cout << "# of Tracks: " << trajectories->entries() << endl;
+  // cout << "ND280RootPersistencyManager::Store()" << endl;
+  // cout << "# of Tracks: " << trajectories->entries() << endl;
+  // G4cout << "# of Tracks: " << trajectories->entries() << G4endl;
+  _log_msg << "Event " << log_event_id << ": " << "# of Tracks: " << trajectories->entries();
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
 
+  /// first loop over trajectories
+  // std::map<int, std::tuple<G4int, G4String, G4double, G4double, G4double, G4double>> tracks_map;
+  std::map<int, std::tuple<G4int, G4String, G4double, G4double, G4double, G4double, G4double, G4double, G4double>> tracks_map;
+  for (TrajectoryVector::iterator t = trajectories->GetVector()->begin();
+       t != trajectories->GetVector()->end();
+       ++t)
+  {
+    ND280Trajectory* ndTraj = dynamic_cast<ND280Trajectory*>(*t);
+    G4int TrajTrkId = ndTraj->GetTrackID();
+    G4int PDG = ndTraj->GetPDGEncoding();
+    G4String ProcessName = ndTraj->GetProcessName();
+    G4double InitialKineticEnergy = ndTraj->GetInitialKineticEnergy();
+    double momX = ndTraj->GetInitialMomentum().x();
+    double momY = ndTraj->GetInitialMomentum().y();
+    double momZ = ndTraj->GetInitialMomentum().z();
 
+    ND280TrajectoryPoint* ndPoint = dynamic_cast<ND280TrajectoryPoint*>(ndTraj->GetPoint(0));
+    double posX = (ndPoint->GetPrevPosition()).x();
+    double posY = (ndPoint->GetPrevPosition()).y();
+    double posZ = (ndPoint->GetPrevPosition()).z();
+
+    tracks_map.insert({TrajTrkId, {PDG, ProcessName, InitialKineticEnergy, momX, momY, momZ, posX, posY, posZ}});
+
+    // G4cout << TrajTrkId << " " << ndTraj->GetParentID() << " " << PDG << " " << ProcessName << " "
+    //        << InitialKineticEnergy << " "
+    //        << momX << " "
+    //        << momY << " "
+    //        << momZ << " "
+    //        << posX << " "
+    //        << posY << " "
+    //        << posZ << " "
+    //        << G4endl;
+  }
+
+  for (auto trk_item: tracks_map)
+  {
+    G4int TrajTrkId = trk_item.first;
+    G4int PDG = std::get<0>(trk_item.second);
+    G4String ProcessName = std::get<1>(trk_item.second);
+    G4double InitialKineticEnergy = std::get<2>(trk_item.second);
+    double momX = std::get<3>(trk_item.second);
+    double momY = std::get<4>(trk_item.second);
+    double momZ = std::get<5>(trk_item.second);
+    double posX = std::get<6>(trk_item.second);
+    double posY = std::get<7>(trk_item.second);
+    double posZ = std::get<8>(trk_item.second);
+
+    // G4cout << TrajTrkId << " " << PDG << " " << ProcessName << " "
+    //        << InitialKineticEnergy << " "
+    //        << momX << " "
+    //        << momY << " "
+    //        << momZ << " "
+    //        << posX << " "
+    //        << posY << " "
+    //        << posZ << " "
+    //        << G4endl;
+  }
 
   
   // loop over the trajectories
   for (TrajectoryVector::iterator t = trajectories->GetVector()->begin();
        t != trajectories->GetVector()->end();
-       ++t) { 
+       ++t)
+  { 
     
     ND280Trajectory* ndTraj = dynamic_cast<ND280Trajectory*>(*t);
     //   G4VTrajectory* g4Traj = dynamic_cast<G4VTrajectory*>(*t);
@@ -855,12 +948,25 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
     double EdepP0DECal    = 0.;
     double EdepUSECalP0D  = 0.;
 
+    double EdepInSFGD = 0.0;
+    double LengthInSFGD = 0.0;
+    // double LeftSFGDwithEkinetic = 0.0;
+    // TVector3 LeftSFGDwithMomentum(-9999999.0, -9999999.0, -9999999.0);
+    double LeftSFGDwithMomentumX = -9999999.0;
+    double LeftSFGDwithMomentumY = -9999999.0;
+    double LeftSFGDwithMomentumZ = -9999999.0;
+
+    bool started_in_sfgd = false;
+    bool stopped_in_sfgd = false;
+    bool contained_in_sfgd = false;
+
     G4String detname_prev = "undefined";
     
     int NPoints = ndTraj->GetPointEntries();
 
-    for(int itp=0;itp<NPoints;itp++){ // loop over all the points
-      
+    /// loop over all the points
+    for(int itp=0;itp<NPoints;itp++)
+    { 
       G4String detname_curr = "undefined";
       ND280TrajectoryPoint* ndPoint = dynamic_cast<ND280TrajectoryPoint*>(ndTraj->GetPoint(itp));
       //detname_curr = ndPoint->GetPhysVolName();
@@ -870,22 +976,24 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
       
       G4String detname_aft  = "undefined";
       ND280TrajectoryPoint* ndPointAfter; 
-      if(itp<(NPoints-1)){ // not if last point
-	ndPointAfter = dynamic_cast<ND280TrajectoryPoint*>(ndTraj->GetPoint(itp+1));
-	//detname_aft  = ndPointAfter->GetPhysVolName();
-	detname_aft  = ndPointAfter->GetLogVolName();
+      if(itp<(NPoints-1)) // if not last point
+      {
+        ndPointAfter = dynamic_cast<ND280TrajectoryPoint*>(ndTraj->GetPoint(itp+1));
+        //detname_aft  = ndPointAfter->GetPhysVolName();
+        detname_aft  = ndPointAfter->GetLogVolName();
       }
       
-      if (!ndPoint) {
-	G4ExceptionDescription msg;
-	msg << "No Points in the Trajectory" << G4endl; 
-	G4Exception("ExN02EventAction::EndOfEventAction()",
-		    "ExN02Code001", JustWarning, msg);
-	return false;
+      if (!ndPoint)
+      {
+        G4ExceptionDescription msg;
+        msg << "No Points in the Trajectory" << G4endl; 
+        G4Exception("ExN02EventAction::EndOfEventAction()",
+              "ExN02Code001", JustWarning, msg);
+        return false;
       }
       
       double steplength = ndPoint->GetStepLength();
-      double stepdeltalyz = ndPoint->GetStepDeltaLyz();  
+      double stepdeltalyz = ndPoint->GetStepDeltaLyz();
       double stepedep = ndPoint->GetEdep();
 
       /////////////////////////////////////////
@@ -895,118 +1003,164 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
       //
       /////////////////////////////////////////
       
-      if(steplength>0.){
-        // make possible work with all configurations and pay attention only to the SFGD volume
-  	if     (detname_curr.contains("/t2k/OA/Magnet/Basket/target1/TargetUniform") ||
-            detname_curr.contains("/t2k/OA/Magnet/Basket/target1/SuperFGD1") || 
-            detname_curr.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/TargetUniform") ||
-            detname_curr.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/SuperFGD1")){
-	  LengthTarget1 += steplength;
-	  EdepTarget1   += stepedep;
-	}
-	else if(detname_curr.contains("/t2k/OA/Magnet/Basket/Target2")){
-	  LengthTarget2 += steplength;	
-	  EdepTarget2   += stepedep;	
-	}
- 	else if(detname_curr.contains("/t2k/OA/Magnet/Basket/FGD1")){
-	  LengthFGD1 += steplength;
-	  EdepFGD1   += stepedep;
-	}
-	else if(detname_curr.contains("/t2k/OA/Magnet/Basket/FGD2")){
-	  LengthFGD2 += steplength;	
-	  EdepFGD2   += stepedep;	
-	}
-  else if(detname_curr.contains("/t2k/OA/Magnet/Basket/FC/HATPCUp/Drift")){    
-	  LengthTPCUp1 += steplength;	
-	  LyzTPCUp1    += stepdeltalyz;
-	  EdepTPCUp1   += stepedep;
-	}
-  else if(detname_curr.contains("/t2k/OA/Magnet/Basket/FC/HATPCDown/Drift")){
-    LengthTPCDown1 += steplength;	
-	  LyzTPCDown1    += stepdeltalyz;
-	  EdepTPCDown1   += stepedep;
-	}
-	else if( detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC1/Half") ||
-		 //detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC1/Drift") ||
-		 detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC1/MM")
-		 ){
-	  LengthForwTPC1 += steplength;	
-	  LyzForwTPC1    += stepdeltalyz;
-	  EdepForwTPC1   += stepedep;
-	}
-	else if( detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC2/Half") ||
-		 //detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC2/Drift") ||
-		 detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC2/MM")
-		 ){
-	  LengthForwTPC2 += steplength;	
-	  LyzForwTPC2    += stepdeltalyz;
-	  EdepForwTPC2   += stepedep;
-	}
-	else if( detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC3/Half") ||
-		 //detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC3/Drift") ||
-		 detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC3/MM")
-		 ){
-	  LengthForwTPC3 += steplength;	
-	  LyzForwTPC3    += stepdeltalyz;
-	  EdepForwTPC3   += stepedep;
-	}
-	
-	else if(detname_curr.contains("/t2k/OA/Magnet/Basket/DsECal")){
-	  
-	  LengthDsECal += steplength;
+      if(steplength>0.)
+      {
+        /// make possible work with all configurations and pay attention only to the SFGD volume
+        if     (detname_curr.contains("/t2k/OA/Magnet/Basket/target1/TargetUniform") ||
+                detname_curr.contains("/t2k/OA/Magnet/Basket/target1/SuperFGD1") || 
+                detname_curr.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/TargetUniform") ||
+                detname_curr.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/SuperFGD1"))
+        {
+          LengthTarget1 += steplength;
+          EdepTarget1   += stepedep;
 
-	  if( detname_curr.contains("/t2k/OA/Magnet/Basket/DsECal/Module/Active/ScintHoriz/Bar") ||
-	      detname_curr.contains("/t2k/OA/Magnet/Basket/DsECal/Module/Active/ScintVert/Bar")
-		 ){
-	    EdepDsECal   += stepedep;
-	  }
-	}
-	else if(detname_curr.contains("/t2k/OA/Magnet/LeftClam/P0DECal")){
-	  
-	  LengthP0DECal += steplength;
-	  
-	  if( detname_curr.contains("/t2k/OA/Magnet/LeftClam/P0DECal/TopLeftBotRight/Active/ScintPara/Bar") ||
-	      detname_curr.contains("/t2k/OA/Magnet/LeftClam/P0DECal/LeftSide/Active/ScintPara/Bar")        ||
-	      detname_curr.contains("/t2k/OA/Magnet/LeftClam/P0DECal/BotLeftTopRight/Active/ScintPara/Bar") ||
-	      detname_curr.contains("/t2k/OA/Magnet/RightClam/P0DECal/TopLeftBotRight/Active/ScintPara/Bar")||       
-	      detname_curr.contains("/t2k/OA/Magnet/RightClam/P0DECal/RightSide/Active/ScintPara/Bar")      || 
-	      detname_curr.contains("/t2k/OA/Magnet/RightClam/P0DECal/BotLeftTopRight/Active/ScintPara/Bar")
-	      ){
-	    EdepP0DECal   += stepedep;
-	  }
-	}
-	else if(detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal")){
-	  
-	  LengthBrlECal += steplength;
-	  
-	  if( detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/TopLeftBotRight/Active/ScintPara/Bar") ||
-	      detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/TopLeftBotRight/Active/ScintPerp/Bar") ||
-	      detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/LeftSide/Active/ScintPara/Bar")        ||
-	      detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/LeftSide/Active/ScintPerp/Bar")        ||       
-	      detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/BotLeftTopRight/Active/ScintPara/Bar") || 
-	      detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/BotLeftTopRight/Active/ScintPerp/Bar") ||
-	      detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/BotLeftTopRight/Active/ScintPara/Bar")|| 
-	      detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/BotLeftTopRight/Active/ScintPerp/Bar")|| 
-	      detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/RightSide/Active/ScintPara/Bar")      ||
-	      detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/RightSide/Active/ScintPerp/Bar")      ||
-	      detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/TopLeftBotRight/Active/ScintPara/Bar")||
-	      detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/TopLeftBotRight/Active/ScintPerp/Bar")
-	      ){
-	    EdepBrlECal   += stepedep;
-	  }
-	}
-	else if(detname_curr.contains("/t2k/OA/Magnet/Basket/P0D/USECal")){
-	  
-	  LengthUSECalP0D += steplength;
-	  
-	  if( detname_curr.contains("/t2k/OA/Magnet/Basket/P0D/USECal/P0Dule/X/Bar") ||
-	      detname_curr.contains("/t2k/OA/Magnet/Basket/P0D/USECal/P0Dule/Y/Bar") 
-	      ){
-	    EdepUSECalP0D += stepedep;
-	  }
-	}
+          LengthInSFGD += steplength;
+          EdepInSFGD += stepedep;
+        }
+        else if(detname_curr.contains("/t2k/OA/Magnet/Basket/Target2")){
+          LengthTarget2 += steplength;	
+          EdepTarget2   += stepedep;	
+        }
+        else if(detname_curr.contains("/t2k/OA/Magnet/Basket/FGD1")){
+          LengthFGD1 += steplength;
+          EdepFGD1   += stepedep;
+        }
+        else if(detname_curr.contains("/t2k/OA/Magnet/Basket/FGD2")){
+          LengthFGD2 += steplength;	
+          EdepFGD2   += stepedep;	
+        }
+        else if(detname_curr.contains("/t2k/OA/Magnet/Basket/FC/HATPCUp/Drift")){    
+          LengthTPCUp1 += steplength;	
+          LyzTPCUp1    += stepdeltalyz;
+          EdepTPCUp1   += stepedep;
+        }
+        else if(detname_curr.contains("/t2k/OA/Magnet/Basket/FC/HATPCDown/Drift")){
+          LengthTPCDown1 += steplength;	
+          LyzTPCDown1    += stepdeltalyz;
+          EdepTPCDown1   += stepedep;
+        }
+        else if( detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC1/Half") ||
+          //detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC1/Drift") ||
+          detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC1/MM")
+          ){
+          LengthForwTPC1 += steplength;	
+          LyzForwTPC1    += stepdeltalyz;
+          EdepForwTPC1   += stepedep;
+        }
+        else if( detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC2/Half") ||
+          //detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC2/Drift") ||
+          detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC2/MM")
+          ){
+          LengthForwTPC2 += steplength;	
+          LyzForwTPC2    += stepdeltalyz;
+          EdepForwTPC2   += stepedep;
+        }
+        else if( detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC3/Half") ||
+          //detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC3/Drift") ||
+          detname_curr.contains("/t2k/OA/Magnet/Basket/ForwTPC3/MM")
+          ){
+          LengthForwTPC3 += steplength;	
+          LyzForwTPC3    += stepdeltalyz;
+          EdepForwTPC3   += stepedep;
+        }
+	
+        else if(detname_curr.contains("/t2k/OA/Magnet/Basket/DsECal")){
+          
+          LengthDsECal += steplength;
+
+          if( detname_curr.contains("/t2k/OA/Magnet/Basket/DsECal/Module/Active/ScintHoriz/Bar") ||
+              detname_curr.contains("/t2k/OA/Magnet/Basket/DsECal/Module/Active/ScintVert/Bar")
+          ){
+            EdepDsECal   += stepedep;
+          }
+        }
+        else if(detname_curr.contains("/t2k/OA/Magnet/LeftClam/P0DECal")){
+          
+          LengthP0DECal += steplength;
+          
+          if( detname_curr.contains("/t2k/OA/Magnet/LeftClam/P0DECal/TopLeftBotRight/Active/ScintPara/Bar") ||
+              detname_curr.contains("/t2k/OA/Magnet/LeftClam/P0DECal/LeftSide/Active/ScintPara/Bar")        ||
+              detname_curr.contains("/t2k/OA/Magnet/LeftClam/P0DECal/BotLeftTopRight/Active/ScintPara/Bar") ||
+              detname_curr.contains("/t2k/OA/Magnet/RightClam/P0DECal/TopLeftBotRight/Active/ScintPara/Bar")||       
+              detname_curr.contains("/t2k/OA/Magnet/RightClam/P0DECal/RightSide/Active/ScintPara/Bar")      || 
+              detname_curr.contains("/t2k/OA/Magnet/RightClam/P0DECal/BotLeftTopRight/Active/ScintPara/Bar")
+              ){
+            EdepP0DECal   += stepedep;
+          }
+        }
+        else if(detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal")){
+          
+          LengthBrlECal += steplength;
+          
+          if( detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/TopLeftBotRight/Active/ScintPara/Bar") ||
+              detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/TopLeftBotRight/Active/ScintPerp/Bar") ||
+              detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/LeftSide/Active/ScintPara/Bar")        ||
+              detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/LeftSide/Active/ScintPerp/Bar")        ||       
+              detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/BotLeftTopRight/Active/ScintPara/Bar") || 
+              detname_curr.contains("/t2k/OA/Magnet/LeftClam/BrlECal/BotLeftTopRight/Active/ScintPerp/Bar") ||
+              detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/BotLeftTopRight/Active/ScintPara/Bar")|| 
+              detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/BotLeftTopRight/Active/ScintPerp/Bar")|| 
+              detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/RightSide/Active/ScintPara/Bar")      ||
+              detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/RightSide/Active/ScintPerp/Bar")      ||
+              detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/TopLeftBotRight/Active/ScintPara/Bar")||
+              detname_curr.contains("/t2k/OA/Magnet/RightClam/BrlECal/TopLeftBotRight/Active/ScintPerp/Bar")
+              ){
+            EdepBrlECal   += stepedep;
+          }
+        }
+        else if(detname_curr.contains("/t2k/OA/Magnet/Basket/P0D/USECal")){
+          
+          LengthUSECalP0D += steplength;
+          
+          if( detname_curr.contains("/t2k/OA/Magnet/Basket/P0D/USECal/P0Dule/X/Bar") ||
+              detname_curr.contains("/t2k/OA/Magnet/Basket/P0D/USECal/P0Dule/Y/Bar") 
+              ){
+            EdepUSECalP0D += stepedep;
+          }
+        }
 
       }
+
+
+      /// check if track started and stopped in SFGD
+      if (
+          detname_curr.contains("/t2k/OA/Magnet/Basket/target1/TargetUniform") ||
+          detname_curr.contains("/t2k/OA/Magnet/Basket/target1/SuperFGD1") || 
+          detname_curr.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/TargetUniform") ||
+          detname_curr.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/SuperFGD1")
+         )
+      {
+        contained_in_sfgd = true;
+        if (itp == 0)
+        {
+          started_in_sfgd = true;
+        }
+        else if (itp == NPoints-1)
+        {
+          stopped_in_sfgd = true;
+        }
+      }
+
+      if (
+        (
+          detname_prev.contains("/t2k/OA/Magnet/Basket/target1/TargetUniform") ||
+          detname_prev.contains("/t2k/OA/Magnet/Basket/target1/SuperFGD1") || 
+          detname_prev.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/TargetUniform") ||
+          detname_prev.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/SuperFGD1")
+        )
+        && !(
+          detname_curr.contains("/t2k/OA/Magnet/Basket/target1/TargetUniform") ||
+          detname_curr.contains("/t2k/OA/Magnet/Basket/target1/SuperFGD1") || 
+          detname_curr.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/TargetUniform") ||
+          detname_curr.contains("/t2k/OA/Magnet/Basket/target1/CFBox1/SuperFGD1")
+        )
+      )
+      {
+        LeftSFGDwithMomentumX = ndPoint->GetMomentum().x();
+        LeftSFGDwithMomentumY = ndPoint->GetMomentum().y();
+        LeftSFGDwithMomentumZ = ndPoint->GetMomentum().z();
+      }
+
             
       //Select points if first/last of the track or
       //if first/last in a SD
@@ -1032,70 +1186,181 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
         ) || itp == 0 || itp == (NPoints-1))
       {
       
-	//G4cout << "TrajTrkId = " << TrajTrkId << " : " 
-	//<< detname_prev << " " << detname_curr << " " << detname_aft << G4endl;
-	
-	TND280UpTrackPoint *nd280TrackPoint = new TND280UpTrackPoint();
-	//std::auto_ptr<TND280UpTrackPoint> nd280TrackPoint(new TND280UpTrackPoint());
-	
-	nd280TrackPoint->SetPointID(itp);
-	nd280TrackPoint->SetTime(ndPoint->GetTime());
-	
-	// momentum 
-	double momPtX = ndPoint->GetMomentum().x();
-	double momPtY = ndPoint->GetMomentum().y();
-	double momPtZ = ndPoint->GetMomentum().z();
-	nd280TrackPoint->SetMomentum(momPtX,momPtY,momPtZ);
-	
-	nd280TrackPoint->SetEdep(ndPoint->GetEdep());
-	nd280TrackPoint->SetStepLength(ndPoint->GetStepLength());
-	nd280TrackPoint->SetStepDeltaLyz(ndPoint->GetStepDeltaLyz());
-	nd280TrackPoint->SetStepStatus(ndPoint->GetStepStatus());
-	nd280TrackPoint->SetPhysVolName(ndPoint->GetPhysVolName());
-	nd280TrackPoint->SetLogVolName(ndPoint->GetLogVolName());
-	
-	// preStep position 
-	double prevX = ndPoint->GetPrevPosition().x();
-	double prevY = ndPoint->GetPrevPosition().y();
-	double prevZ = ndPoint->GetPrevPosition().z();
-	nd280TrackPoint->SetPrePosition(prevX,prevY,prevZ);
-	
-	// postStep position
-	double postX = ndPoint->GetPostPosition().x();
-	double postY = ndPoint->GetPostPosition().y();
-	double postZ = ndPoint->GetPostPosition().z();
-	nd280TrackPoint->SetPostPosition(postX,postY,postZ);
-	
-	nd280TrackPoint->SetIsOnBoundary(ndPoint->IsOnBoundary());
+        //G4cout << "TrajTrkId = " << TrajTrkId << " : " 
+        //<< detname_prev << " " << detname_curr << " " << detname_aft << G4endl;
+        
+        TND280UpTrackPoint *nd280TrackPoint = new TND280UpTrackPoint();
+        //std::auto_ptr<TND280UpTrackPoint> nd280TrackPoint(new TND280UpTrackPoint());
+        
+        nd280TrackPoint->SetPointID(itp);
+        nd280TrackPoint->SetTime(ndPoint->GetTime());
+        
+        // momentum 
+        double momPtX = ndPoint->GetMomentum().x();
+        double momPtY = ndPoint->GetMomentum().y();
+        double momPtZ = ndPoint->GetMomentum().z();
+        nd280TrackPoint->SetMomentum(momPtX,momPtY,momPtZ);
+        
+        nd280TrackPoint->SetEdep(ndPoint->GetEdep());
+        nd280TrackPoint->SetStepLength(ndPoint->GetStepLength());
+        nd280TrackPoint->SetStepDeltaLyz(ndPoint->GetStepDeltaLyz());
+        nd280TrackPoint->SetStepStatus(ndPoint->GetStepStatus());
+        nd280TrackPoint->SetPhysVolName(ndPoint->GetPhysVolName());
+        nd280TrackPoint->SetLogVolName(ndPoint->GetLogVolName());
+        
+        // preStep position 
+        double prevX = ndPoint->GetPrevPosition().x();
+        double prevY = ndPoint->GetPrevPosition().y();
+        double prevZ = ndPoint->GetPrevPosition().z();
+        nd280TrackPoint->SetPrePosition(prevX,prevY,prevZ);
+        
+        // postStep position
+        double postX = ndPoint->GetPostPosition().x();
+        double postY = ndPoint->GetPostPosition().y();
+        double postZ = ndPoint->GetPostPosition().z();
+        nd280TrackPoint->SetPostPosition(postX,postY,postZ);
+        
+        nd280TrackPoint->SetIsOnBoundary(ndPoint->IsOnBoundary());
 
-	
-	//
-	// Store points if first/last point of the track
-	// or first/last of a SD
-	// (same condition already defined above)
-	//
-		
-	// G4cout << "- Track PDG: " << nd280Track->GetPDG()
-	//        << " --> TrkID = " << nd280Track->GetTrackID() 
-	//        << " --> ParID = " << nd280Track->GetParentID() 
-	//        << G4endl;
-	
-  MarkPoint(ndPoint);
-  nd280Track->AddPoint(nd280TrackPoint);
-	// // Mark the points
-	// MarkPoint(ndPoint); // Store if in a SD 
-	// if(ndPoint->SavePoint()){    
-	// //if(1){ // TEST PARTICLE GUN
-	//   nd280Track->AddPoint(nd280TrackPoint);
-	// }	
-	// else if(itp == 0           || 
-	// 	itp == (NPoints-1)
-	// 	){
-	//   nd280Track->AddPoint(nd280TrackPoint);
-	// }
+        nd280TrackPoint->SetPreProcessName(ndPoint->GetPreProcessName());
+        nd280TrackPoint->SetPostProcessName(ndPoint->GetPostProcessName());
+        nd280TrackPoint->SetMaterialName(ndPoint->GetMaterialName());
+        nd280TrackPoint->SetPreProcessType(ndPoint->GetPreProcessType());
+        nd280TrackPoint->SetPostProcessType(ndPoint->GetPostProcessType());
+        // nd280TrackPoint->SetSecondariesIds(ndPoint->GetSecondariesIds());
 
-	//delete nd280TrackPoint; 
-	//nd280TrackPoint=NULL;
+        // std::vector<std::tuple<int, double, double, double, double, std::string>> secondaries = ndPoint->GetSecondariesIds();
+        std::vector<std::tuple<int, double, double, double, double, std::string, double, double, double>> secondaries = ndPoint->GetSecondariesIds();
+        std::vector<G4int> secondaries_ids;
+        std::vector<std::tuple<int, int, double, double, double, double, std::string, double, double, double, int>> to_save;
+        ///                    ID   PDG  Ek0     Px      Py      Pz      ProcName     X       Y       Z       Status
+        if (secondaries.size())
+        {
+          for (auto secondary_track_item: secondaries)
+          {
+            int _PDG = std::get<0>(secondary_track_item);
+            double _InitEkin = std::get<1>(secondary_track_item);
+            double _momX = std::get<2>(secondary_track_item);
+            double _momY = std::get<3>(secondary_track_item);
+            double _momZ = std::get<4>(secondary_track_item);
+            std::string proc_name = std::get<5>(secondary_track_item);
+            double _posX = std::get<6>(secondary_track_item);
+            double _posY = std::get<7>(secondary_track_item);
+            double _posZ = std::get<8>(secondary_track_item);
+
+            // G4cout << "-" << ndTraj->GetTrackID() << " " << itp << " " << _PDG << " " << proc_name << " "
+            //         << _InitEkin << " "
+            //         << _momX << " "
+            //         << _momY << " "
+            //         << _momZ << " "
+            //         << _posX << " "
+            //         << _posY << " "
+            //         << _posZ << " "
+            //         << G4endl;
+
+            // bool found = false;
+            int found = 0;
+            int f_TrkId = -999;
+            // int f_PDG = -999;
+            // double f_InitEkin = -999.0;
+            // double f_momX = -999.0;
+            // double f_momY = -999.0;
+            // double f_momZ = -999.0;
+            // double f_posX = -999.0;
+            // double f_posY = -999.0;
+            // double f_posZ = -999.0;
+            // std::string f_proc_name = "NONE";
+            for (auto trk_item: tracks_map)
+            {
+              G4int TrajTrkId_ = trk_item.first;
+              G4int PDG_ = std::get<0>(trk_item.second);
+              std::string ProcessName_ = std::string(std::get<1>(trk_item.second));
+              G4double InitialKineticEnergy_ = std::get<2>(trk_item.second);
+              double momX_ = std::get<3>(trk_item.second);
+              double momY_ = std::get<4>(trk_item.second);
+              double momZ_ = std::get<5>(trk_item.second);
+              double posX_ = std::get<6>(trk_item.second);
+              double posY_ = std::get<7>(trk_item.second);
+              double posZ_ = std::get<8>(trk_item.second);
+
+              // if (
+              //          PDG_ == _PDG
+              //       && InitialKineticEnergy_ == _InitEkin
+              //       && momX_ == _momX
+              //       && momY_ == _momY
+              //       && momZ_ == _momZ
+              //       && ProcessName_ == proc_name 
+              //    )
+              if (
+                       PDG_ == _PDG
+                    && abs(InitialKineticEnergy_ - _InitEkin) <= 1.0e-6
+                    && abs(momX_ - _momX) <= 1.0e-6
+                    && abs(momY_ - _momY) <= 1.0e-6
+                    && abs(momZ_ - _momZ) <= 1.0e-6
+                    && ProcessName_ == proc_name 
+                    && abs(posX_ - _posX) <= 1.0e-6
+                    && abs(posY_ - _posY) <= 1.0e-6
+                    && abs(posZ_ - _posZ) <= 1.0e-6
+                 )
+              {
+                secondaries_ids.push_back(TrajTrkId_);
+                // found = true;
+                found = 1;
+                f_TrkId = TrajTrkId_;
+                _PDG = PDG_;
+                _InitEkin = InitialKineticEnergy_;
+                _momX = momX_;
+                _momY = momY_;
+                _momZ = momZ_;
+                proc_name = ProcessName_;
+                _posX = posX_;
+                _posY = posY_;
+                _posZ = posZ_;
+                break;
+              }
+            }
+
+            // to_save.push_back({f_TrkId, _PDG, _InitEkin, _momX, _momY, _momZ, proc_name, _posX, _posY, _posZ, (int)found});
+            to_save.push_back({f_TrkId, _PDG, _InitEkin, _momX, _momY, _momZ, proc_name, _posX, _posY, _posZ, found});
+          }
+
+          // G4cout << " N_secondaries: " << secondaries.size() << G4endl;
+          // G4cout << " N_secondaries_ids: " << secondaries_ids.size() << G4endl;
+
+          // if (secondaries.size() != secondaries_ids.size()) throw;
+
+        }
+
+        nd280TrackPoint->SetSecondariesIds(to_save);
+
+        
+        //
+        // Store points if first/last point of the track
+        // or first/last of a SD
+        // (same condition already defined above)
+        //
+          
+        // G4cout << "- Track PDG: " << nd280Track->GetPDG()
+        //        << " --> TrkID = " << nd280Track->GetTrackID() 
+        //        << " --> ParID = " << nd280Track->GetParentID() 
+        //        << G4endl;
+        
+        MarkPoint(ndPoint);
+        nd280Track->AddPoint(nd280TrackPoint);
+        // // Mark the points
+        // MarkPoint(ndPoint); // Store if in a SD 
+        // if(ndPoint->SavePoint()){    
+        // //if(1){ // TEST PARTICLE GUN
+        //   nd280Track->AddPoint(nd280TrackPoint);
+        // }	
+        // else if(itp == 0           || 
+        // 	itp == (NPoints-1)
+        // 	){
+        //   nd280Track->AddPoint(nd280TrackPoint);
+        // }
+
+        //delete nd280TrackPoint; 
+        //nd280TrackPoint=NULL;
       }
       
       detname_prev = detname_curr;
@@ -1157,10 +1422,26 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
     nd280Track->SetEdepBrlECal(EdepBrlECal);
     nd280Track->SetEdepP0DECal(EdepP0DECal);
     nd280Track->SetEdepUSECalP0D(EdepUSECalP0D);
+
+    nd280Track->SetLengthInSFGD(LengthInSFGD);
+    nd280Track->SetEdepInSFGD(EdepInSFGD);
+    nd280Track->SetLeftSFGDwithMometum(LeftSFGDwithMomentumX, LeftSFGDwithMomentumY, LeftSFGDwithMomentumZ);
+    nd280Track->SetIsStartedInSFGD(started_in_sfgd);
+    nd280Track->SetIsStoppedInSFGD(stopped_in_sfgd);
     
     // Mark the trajectories to save.
     // // MarkTrajectories(anEvent); // loop over all the tracks again... --> don't use it!!!
-    MarkTrajectory(ndTraj,anEvent);
+    // MarkTrajectory(ndTraj,anEvent);
+
+    if (!started_in_sfgd && !stopped_in_sfgd) /// track not started and not stopped in SFGD
+    {
+
+    }
+    else
+    {
+      MarkTrajectory(ndTraj,anEvent);
+    }
+
     if(ndTraj->SaveTrajectory()){
       nd280Track->SaveIt(true); // useless     
       fND280UpEvent->AddTrack(nd280Track);
@@ -1200,11 +1481,14 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
   } // end loop over Trajectories
 
 
-  cout << "Tot # of Tracks stored in output event: " << fND280UpEvent->GetNTracks() << endl;
+  // cout << "Tot # of Tracks stored in output event: " << fND280UpEvent->GetNTracks() << endl;
+  _log_msg << "Event " << log_event_id << ": " << "Tot # of Tracks stored in output event: " << fND280UpEvent->GetNTracks();
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
 
     
   
   fOutput->cd();
+  fOutput->Write(); /// !!!NEW!!!
   
   // Get the address of the event from the auto_ptr to the fEventTree branch
   // pointer,, and  then fill the event  tree.  This copies the  data to the
@@ -1236,7 +1520,20 @@ bool ND280RootPersistencyManager::Store(const G4Event* anEvent) {
   //   ND280Info("AutoSave Event Tree");
   //   fEventTree->AutoSave("SaveSelf");
   //   fEventsNotSaved = 0;
-  // }  
+  // } 
+
+  // G4cout << "\n\n"
+  //      << "//////////////////////////////////////////////////////////////\n"
+  //      << "//  finished ND280RootPersistencyManager::Store for event " << anEvent->GetEventID() << "\n"
+  //      << "//////////////////////////////////////////////////////////////\n"
+  // << G4endl;
+  // _log_msg << "Event " << anEvent->GetEventID() << ": "
+  //          << "'ND280RootPersistencyManager::Store' finished";
+  // log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
+  _log_msg << "Finished storing event " << anEvent->GetEventID();
+  log("DBG", std::string(__FILE__), std::to_string(__LINE__), std::string(__func__), _log_msg);
+
+  G4cout << "\n\n" << G4endl;
 
   return true;
 }

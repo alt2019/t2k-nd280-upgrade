@@ -38,6 +38,8 @@
 
 #include "ExN02ND280XML.hh"
 
+#include "logger.hh"
+
 class G4Step;
 class G4HCofThisEvent;
 

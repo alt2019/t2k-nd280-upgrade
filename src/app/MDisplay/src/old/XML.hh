@@ -135,6 +135,8 @@ struct XMLObject
 		if      (symb == '\t') return std::string(Level    , symb);
 		else if (symb == ' ' ) return std::string(Level * 2, symb);
 		// else if (symb == ""  ) return "";
+		
+		return "";
 	}
 
 	void clear()
